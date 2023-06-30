@@ -1,0 +1,134 @@
+import { DomDataSheet, getHostDataParams } from '../config';
+import { stylesContextTwo } from '@/pages/content/component/styleSheet';
+import { copyInfoToServices, sendMessageSetIndex } from '@/pages/content/messageStore';
+import { MessageEventType } from '@/common/types';
+import { putDownICPData } from '@/pages/content/output';
+import { createDom, queryEle } from '@/pages/content/tools';
+
+// 设置css;
+export const createContentStyle = (css: string) => {
+  let style: any = document.createElement('style');
+  style.type = 'text/css';
+  try {
+    style.appendChild(document.createTextNode(css));
+  } catch (ex) {
+    style.styleSheet.cssText = css;
+  }
+  let head = document.getElementsByTagName('head')[0];
+  head.appendChild(style);
+};
+
+export const RegUrlConfig = (local: any) => {
+  let reg = '^/[a-zA-Z0-9_-]*/';
+  let path = local.host + local.pathname.match(reg)[0];
+  let index = path.indexOf('58');
+  if (index >= 0) {
+    path = path.slice(index);
+  }
+  return path;
+};
+
+export const createContentView = () => {
+  createContentStyle(stylesContextTwo);
+  let dom: any = queryEle('body');
+  let floatView = queryEle('.floatModal');
+  let modalView = queryEle('.floatView');
+  if (floatView) floatView.remove();
+  if (modalView) modalView.remove();
+  floatView = createDom({ tag: 'div', cla: 'floatView' });
+  dom.appendChild(floatView);
+  CreateEDIModal();
+  CreateICPModal();
+  // CreateMapModal();
+  settingServerIndex();
+  if (DomDataSheet.hasOwnProperty(RegUrlConfig(document.location))) {
+    DomDataSheet[RegUrlConfig(document.location)]();
+  }
+};
+
+const CreateEDIModal = () => {
+  let floatView = queryEle('.floatView');
+  let EDIModal: any = queryEle('.floatView>.EDIModal');
+  EDIModal?.remove();
+  EDIModal = createDom({ tag: 'div', cla: 'EDIModal', txt: 'EDI提交' });
+  floatView?.appendChild(EDIModal);
+  EDIModal.addEventListener('click', () => {});
+};
+const CreateICPModal = () => {
+  let floatView = queryEle('.floatView');
+  let ICPModal: any = queryEle('.floatView>.ICPModal');
+  ICPModal?.remove();
+  ICPModal = createDom({ tag: 'div', cla: 'ICPModal', txt: 'ICP提交' });
+  floatView?.appendChild(ICPModal);
+  ICPModal.addEventListener('click', () => {
+    createICPInfo();
+  });
+};
+
+const createICPInfo = () => {
+  let params: any = getHostDataParams(document.location);
+  copyInfoToServices(params);
+};
+
+// const CreateMapModal = () => {
+//   let iframe: any = queryEle('.iframe');
+//   iframe?.remove();
+//   iframe = document.createElement('iframe');
+//   iframe.src = 'https://map.so.com/';
+//   iframe.className = 'OnlyIframe';
+//   document.body.appendChild(iframe);
+// };
+
+const settingServerIndex = () => {
+  let CateData = [
+    { name: '租房', key: 'ZU_FANG' },
+    { name: '招聘', key: 'ZHAO_PING' },
+    { name: '卖房', key: 'MAI_FANG' },
+    { name: '卖车', key: 'MAI_CHE' },
+    { name: '手机', key: 'SHOU_JI' },
+  ];
+  let Index = queryEle('.SERVER_INDEX');
+  if (Index) Index.remove();
+  let dom: any = queryEle('body');
+  Index = createDom({ tag: 'div', cla: 'SERVER_INDEX', txt: '设置输出' });
+  let CateList = createDom({ tag: 'div', cla: 'CateList' });
+  CateData.map((item, index) => {
+    let tagDom = createDom({ tag: 'div', cla: `CateItem ${item.key}`, txt: item.name });
+    tagDom.addEventListener('click', (e: any) => {
+      console.log(e.target.className, index);
+      let key = e.target.className.split('CateItem ')[1];
+      delModal();
+      addMessageModal();
+      sendMessageSetIndex(key);
+    });
+    CateList.appendChild(tagDom);
+  });
+  Index.appendChild(CateList);
+  dom.appendChild(Index);
+  // Index.addEventListener('click', () => {
+  //   delModal();
+  //   addMessageModal();
+  //   sendMessageSetIndex();
+  // });
+};
+
+export const delModal = () => {
+  // let floatView = queryEle('.floatView');
+  // if (floatView) floatView.remove();
+};
+
+export const addMessageModal = () => {
+  let floatView: any = queryEle('.floatView');
+  let domView = queryEle('.floatModel');
+  domView?.remove();
+  domView = createDom({ tag: 'div', cla: 'floatModel' });
+  floatView.appendChild(domView);
+};
+
+export const putDownDataForServer = (
+  sender: chrome.runtime.MessageSender,
+  request: MessageEventType<any>
+) => {
+  console.log('[request]', request);
+  putDownICPData(request);
+};

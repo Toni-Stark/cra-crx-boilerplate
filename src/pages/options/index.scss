@@ -1,8 +1,78 @@
-.container {
+.OptionsContainer {
   width: 100%;
-  height: 50vh;
+  height: 100vh;
   font-size: 2rem;
   display: flex;
   align-items: center;
   justify-content: center;
+}
+.SettingViews {
+  background-color: #f3f3f3;
+  box-shadow: 0 0 16px -2px #eaeaea;
+  width: 50vw;
+  min-height: 50vh;
+  border-radius: 1vw;
+  display: flex;
+  padding: 1vw;
+}
+.SettingTabs {
+  display: flex;
+  max-width: 11vw;
+  border-radius: 1vw 0 0 1vw;
+  background-color: #ffffff;
+  border-right: 2px solid #f3f3f3;
+  flex-direction: column;
+  font-size: 1vw;
+  flex: 1;
+}
+.SettingTitle {
+  border-bottom: 2px solid #f2f2f2;
+  font-weight: bold;
+}
+.SettingTitle, .SettingList div{
+  padding: 1vw 1.6vw;
+  cursor: pointer;
+}
+
+.SettingList div:hover{
+  color: darkcyan;
+}
+.SettingList {
+  height: 100%;
+}
+
+.SettingContent {
+  font-size: 1vw;
+  flex: 1;
+  background: #ffffff;
+  border-radius: 0 1vw 1vw 0;
+}
+.SettingItem {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 1vw;
+  border-bottom: 2px solid #f3f3f3;
+  box-sizing: border-box;
+}
+.SettingContent>.SettingItem:last-child {
+  border: none;
+}
+.SettingContent>.SettingItem:first-child {
+  border-top-right-radius: 1vw;
+}
+.SettingContent>.SettingItem:last-child {
+  border-bottom-right-radius: 1vw;
+}
+.SettingContent>.SettingItem:hover{
+  background-color: rgba(241, 241, 241, 0.38);
+}
+.ChangeTime {
+  font-size: 0.8vw;
+  color: #666666;
+  margin-top: 0.5vw;
+}
+.SettingList>.active {
+  background: #f0f8ff;
+  color: #07718c;
 }

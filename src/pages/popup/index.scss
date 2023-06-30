@@ -1,25 +1,39 @@
 body {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  width: 600px;
-  height: 400px;
+  padding: 0;
+  width: 250px;
+  height: 250px;
+  position: relative;
 }
-
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
-}
-
 .App {
-  text-align: center;
+  top: 0px;
+  bottom: 0px;
+  left: 0px;
+  right: 0px;
+  height: 100%;
+  padding: 10px;
+  display: flex;
+  position: absolute;
+  box-sizing: border-box;
+  flex-direction: column;
+  justify-content: center;
+  background-color: #ffffff;
 }
-
+.AppHeader {
+  width: 100%;
+  display: flex;
+  color: #2b2b2b;
+  padding: 3px 0;
+  font-size: 14px;
+  font-weight: bold;
+  border-radius: 3px;
+  letter-spacing: 1px;
+  align-items: center;
+  background-color: #f2f2f2;
+  justify-content: flex-start;
+}
 .App-logo {
-  height: 40vmin;
+  height: 10vmin;
   pointer-events: none;
 }
 
@@ -28,23 +42,63 @@ code {
     animation: App-logo-spin infinite 20s linear;
   }
 }
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
 @keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.ModalContent {
+  flex: 1;
+  display: flex;
+  font-size: 12px;
+  margin-top: 6px;
+  padding: 5px 10px;
+  font-weight: bold;
+  border-radius: 3px;
+  flex-direction: column;
+  background-color: #f2f2f2;
+}
+.ModalList {
+  display: flex;
+  flex-wrap: wrap;
+  margin-top: 3px;
+  padding-top: 6px;
+  border-top: 1px solid #ffffff;
+}
+.ModalItem {
+  width: 30%;
+  height: 62px;
+  background-color: #fff;
+}
+.ModalList>.ModalItem:nth-child(3n+1) {
+  margin-left: 0;
+}
+.ModalList>.ModalItem {
+  display: flex;
+  cursor: pointer;
+  margin-left: 5%;
+  border-radius: 3px;
+  align-items: center;
+  flex-direction: column;
+  justify-content: center;
+}
+.ModalList>.ModalItem>img {
+  width: 30px;
+  height: auto;
+  margin-bottom: 5px;
+}
+.ModalList>.ModalItem:hover {
+  border-radius: 50%;
+  transition: all 0.3s;
+  transform:scale(1.05);
+  animation: item-login-spin infinite 10s linear;
+
+}
+@keyframes item-login-spin {
   from {
     transform: rotate(0deg);
   }
