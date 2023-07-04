@@ -3,7 +3,7 @@ import { stylesContextTwo } from '@/pages/content/component/styleSheet';
 import { copyInfoToServices, sendMessageSetIndex } from '@/pages/content/messageStore';
 import { MessageEventType } from '@/common/types';
 import { putDownICPData } from '@/pages/content/output';
-import { createDom, queryEle } from '@/pages/content/tools';
+import { createDom, noStr, queryEle } from '@/pages/content/tools';
 
 // 设置css;
 export const createContentStyle = (css: string) => {
@@ -21,11 +21,26 @@ export const createContentStyle = (css: string) => {
 export const RegUrlConfig = (local: any) => {
   let reg = '^/[a-zA-Z0-9_-]*/';
   let path = local.host + local.pathname.match(reg)[0];
-  let index = path.indexOf('58');
-  if (index >= 0) {
-    path = path.slice(index);
+  let i58 = path.indexOf('58');
+  let i5i = path.indexOf('5i5j');
+  let izu = path.indexOf('zu.anjuke');
+  let ian = path.indexOf('anjuke');
+  let iba = path.indexOf('baixing');
+  if (i58 >= 0) {
+    return path.slice(i58);
   }
-  return path;
+  if (i5i >= 0) {
+    return path.slice(i5i);
+  }
+  if (izu >= 0) {
+    return path.slice(izu);
+  }
+  if (ian >= 0) {
+    return path.slice(ian);
+  }
+  if (iba >= 0) {
+    return path.slice(iba);
+  }
 };
 
 export const createContentView = () => {

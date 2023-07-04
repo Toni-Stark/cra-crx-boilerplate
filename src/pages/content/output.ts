@@ -1,5 +1,13 @@
 import { trimSpecial } from '@/common/passage-certificate';
-import { queryEle, queryEleAll } from '@/pages/content/tools';
+import {
+  getAreaRandom,
+  getChePriceRandom,
+  getMinxRandom,
+  getPriceRandom,
+  getRegRandom,
+  queryEle,
+  queryEleAll,
+} from '@/pages/content/tools';
 import { sitType, situationType, unitType } from '@/common/types';
 
 export const PERMANENT: any = {
@@ -53,7 +61,7 @@ export const putDownICPData = (data: any) => {
     if (data.hasOwnProperty(i)) {
       let formEle: any = queryEle(PERMANENT[i]);
       if (i === 'context') {
-        formEle.textContent = trimSpecial(data[i]);
+        formEle.value = trimSpecial(data[i]);
       } else {
         if (formEle) {
           formEle.value = data[i];
@@ -74,8 +82,9 @@ export const putDownICPData = (data: any) => {
     for (let i in ZU_FANG) {
       let e = new Event('input');
       if (i === 'price') {
+        let ranNum: any = getPriceRandom(data.title, data.context);
         let formEle: any = queryEle(ZU_FANG[i]);
-        formEle.value = Math.ceil(Math.random() * 20) * 100;
+        formEle.value = ranNum;
         formEle?.dispatchEvent(e);
       }
       if (i === 'house') {
@@ -84,14 +93,19 @@ export const putDownICPData = (data: any) => {
         );
         clickDom.click();
         setTimeout(() => {
-          let ranNum = Math.ceil(Math.random() * 4);
+          let ranNum: any = getRegRandom(data.title, data.context);
+          if (ranNum?.index === 1) {
+            let formEle: any = queryEle(PERMANENT['context']);
+            formEle.textContent = ranNum.text;
+            ranNum = ranNum.num;
+          }
           let text: any = queryEle(ZU_FANG[i] + ':nth-child(' + ranNum + ')>span');
           text?.click();
         }, 200);
       }
       if (i === 'area') {
         let formEle: any = queryEle(ZU_FANG[i]);
-        formEle.value = Math.ceil(Math.random() * 10) * 10 + 50;
+        formEle.value = getAreaRandom(data.title, data.context);
         formEle?.dispatchEvent(e);
       }
     }
@@ -187,13 +201,14 @@ export const putDownICPData = (data: any) => {
       if (i === 'price') {
         let e = new Event('input');
         let formEle: any = queryEle(MAI_CHE[i]);
-        formEle.value = (Math.random() * 20).toFixed(1) + '0';
+        formEle.value = getChePriceRandom(data.title, data.context, data[i]);
         formEle?.dispatchEvent(e);
       }
       if (i === 'mileage') {
-        let e = new Event('input');
+        let ranNum: any = getMinxRandom(data.title, data.context, data[i]);
         let formEle: any = queryEle(MAI_CHE[i]);
-        formEle.value = Math.ceil(Math.random() * 6);
+        formEle.value = ranNum;
+        let e = new Event('input');
         formEle?.dispatchEvent(e);
       }
     }
