@@ -2,6 +2,8 @@
   "name": "cra-crx-boilerplate",
   "version": "1.0.0",
   "private": true,
+  "author": "LiHao",
+  "homepage": "https://github.com/Toni-Stark/cra-crx-boilerplate",
   "dependencies": {
     "react": "^18.1.0",
     "react-dom": "^18.1.0"
