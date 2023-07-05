@@ -3,7 +3,7 @@ import { stylesContextTwo } from '@/pages/content/component/styleSheet';
 import { copyInfoToServices, sendMessageSetIndex } from '@/pages/content/messageStore';
 import { MessageEventType } from '@/common/types';
 import { putDownICPData } from '@/pages/content/output';
-import { createDom, noStr, queryEle } from '@/pages/content/tools';
+import { createDom, queryEle } from '@/pages/content/tools';
 
 // 设置css;
 export const createContentStyle = (css: string) => {
@@ -107,24 +107,27 @@ const settingServerIndex = () => {
   let dom: any = queryEle('body');
   Index = createDom({ tag: 'div', cla: 'SERVER_INDEX', txt: '设置输出' });
   let CateList = createDom({ tag: 'div', cla: 'CateList' });
-  CateData.map((item, index) => {
+  CateData?.map((item, index) => {
     let tagDom = createDom({ tag: 'div', cla: `CateItem ${item.key}`, txt: item.name });
     tagDom.addEventListener('click', (e: any) => {
-      console.log(e.target.className, index);
       let key = e.target.className.split('CateItem ')[1];
-      delModal();
       addMessageModal();
-      sendMessageSetIndex(key);
+      let selectDom: any = queryEle('.el-cascader>.el-cascader__label');
+      selectDom?.click();
+      if (selectDom) {
+        setTimeout(() => {
+          let addText = document.querySelector('.el-cascader-menu>li');
+          if (addText?.textContent) {
+            sendMessageSetIndex(key, addText?.textContent);
+          }
+        }, 200);
+      }
     });
     CateList.appendChild(tagDom);
+    return item;
   });
   Index.appendChild(CateList);
   dom.appendChild(Index);
-  // Index.addEventListener('click', () => {
-  //   delModal();
-  //   addMessageModal();
-  //   sendMessageSetIndex();
-  // });
 };
 
 export const delModal = () => {

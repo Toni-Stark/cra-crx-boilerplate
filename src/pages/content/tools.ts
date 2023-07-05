@@ -33,7 +33,7 @@ export const createDom = ({ tag, cla, sty, val, txt }: CreateElementType): Eleme
 };
 
 export const getRegRandom = (title: any, context: any) => {
-  let reg = /[0-9一二三四五](室|(居室)|房)/;
+  let reg = /[0-9一二三四五两](室|(居室)|房)/;
   let tVal = title?.match(reg);
   let cVal = context?.match(reg);
   if (!tVal && !cVal) {

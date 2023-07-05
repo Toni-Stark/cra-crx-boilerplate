@@ -91,7 +91,7 @@ export const putDownICPData = (data: any) => {
         let clickDom: any = queryEle(
           '.el-col>div>.el-form-item:nth-child(2)>.el-form-item__content>.el-select'
         );
-        clickDom.click();
+        clickDom?.click();
         setTimeout(() => {
           let ranNum: any = getRegRandom(data.title, data.context);
           if (ranNum?.index === 1) {
@@ -216,9 +216,10 @@ export const putDownICPData = (data: any) => {
   if (data.cate === 'SHOU_JI') {
     for (let i in SHOU_JI) {
       if (i === 'price') {
+        let ranNum: any = getPriceRandom(data.title, data.context);
         let e = new Event('input');
         let formEle: any = queryEle(SHOU_JI[i]);
-        formEle.value = data.price;
+        formEle.value = ranNum;
         formEle?.dispatchEvent(e);
       }
     }

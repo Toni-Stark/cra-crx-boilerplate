@@ -55,6 +55,17 @@ export const ES_SJ58 = {
   context: '.description_con',
   price: '.infocard__container__item__main__text--price',
 };
+export const ES_SJ_BAI_XIN = {
+  title: '.viewad-title>h1',
+  context: '.viewad-description>.viewad-text',
+  price: '.viewad-actions>.price',
+};
+export const CAT_ES58 = {
+  title: '.detail-title__name',
+  context: '.description_con>p',
+  price: '.infocard__container__item__main__text--price',
+};
+
 export const CHE168 = {
   title: '.car-brand-name',
   context: '.message-box',
@@ -130,32 +141,38 @@ export const SetBossData = (): DomDataType => {
     address: valList[3].value,
   };
 };
+
+export const createDomEvent = (
+  bar: string,
+  title: string | undefined,
+  ele: string,
+  dom: HTMLDivElement
+) => {
+  let Event: any = createInputDom(bar, title);
+  let titleDom = queryEle(ele);
+  titleDom?.parentNode?.replaceChild(Event, titleDom);
+  Event.appendChild(dom);
+  return Event;
+};
+
 export const AddBossTips = (data: any, params: any): DomParamsType => {
   const { title, context, company_name, personnel, address } = data;
-  let titleInput: any = createInputDom('input', params.title);
-  let titleDom: ElementType = queryEle(title);
-  titleDom?.parentNode?.replaceChild(titleInput, titleDom);
-  titleInput.appendChild(DomTipsView('标题'));
+  let titleInput: any = createDomEvent('input', params.title, title, DomTipsView('标题'));
+  let contextInput: any = createDomEvent('textarea', params.context, context, DomTipsView('内容'));
+  let companyInput: any = createDomEvent(
+    'input',
+    params.company_name,
+    company_name,
+    DomTipsView('公司')
+  );
+  let personnelInput: any = createDomEvent(
+    'input',
+    params.personnel,
+    personnel,
+    DomTipsView('联系人')
+  );
+  let addressInput: any = createDomEvent('input', params.address, address, DomTipsView('地址'));
 
-  let contextInput: any = createInputDom('textarea', params.context);
-  let contextDom = queryEle(context);
-  contextDom?.parentNode?.replaceChild(contextInput, contextDom);
-  contextInput.appendChild(DomTipsView('内容'));
-
-  let companyInput: any = createInputDom('input', params.company_name);
-  let companyDom = queryEle(company_name);
-  companyDom?.parentNode?.replaceChild(companyInput, companyDom);
-  companyInput.appendChild(DomTipsView('公司'));
-
-  let personnelInput: any = createInputDom('input', params.personnel);
-  let personnelDom = queryEle(personnel);
-  personnelDom?.parentNode?.replaceChild(personnelInput, personnelDom);
-  personnelInput.appendChild(DomTipsView('联系人'));
-
-  let addressInput: any = createInputDom('input', params.address);
-  let addressDom = queryEle(address);
-  addressDom?.parentNode?.replaceChild(addressInput, addressDom);
-  addressInput.appendChild(DomTipsView('地址'));
   return {
     title: titleInput.value,
     textarea: contextInput.textContent,
@@ -182,15 +199,9 @@ export const SetZuFangData = (): DomDataType => {
 };
 export const AddCZ58Tips = (data: any, params: any): DomParamsType => {
   const { title, context } = data;
-  let titleInput: any = createInputDom('input', params.title);
-  let titleDom = queryEle(title);
-  titleDom?.parentNode?.replaceChild(titleInput, titleDom);
-  titleInput.appendChild(DomTipsView('标题'));
+  let titleInput: any = createDomEvent('input', params.title, title, DomTipsView('标题'));
+  let contextInput: any = createDomEvent('textarea', params.context, context, DomTipsView('内容'));
 
-  let contextInput: any = createInputDom('textarea', params.context);
-  let contextDom = queryEle(context);
-  contextDom?.parentNode?.replaceChild(contextInput, contextDom);
-  contextInput.appendChild(DomTipsView('内容'));
   return {
     title: titleInput.value,
     textarea: contextInput.textContent,
@@ -237,35 +248,18 @@ export const SetBaiXinData = (): DomDataType => {
 };
 export const AddESF58Tips = (data: any, params: any): DomParamsType => {
   const { title, context, place, unit, price, situation } = data;
-  let titleInput: any = createInputDom('input', params.title);
-  let titleDom = queryEle(title);
-  titleDom?.parentNode?.replaceChild(titleInput, titleDom);
-  titleInput.appendChild(DomTipsView('标题'));
+  let titleInput: any = createDomEvent('input', params.title, title, DomTipsView('标题'));
+  let contextInput: any = createDomEvent('textarea', params.context, context, DomTipsView('内容'));
+  let placeInput: any = createDomEvent('input', params.place, place, DomTipsView('面积'));
+  let unitInput: any = createDomEvent('input', params.unit, unit, DomTipsView('规格'));
+  let priceInput: any = createDomEvent('input', params.price, price, DomTipsView('价格'));
+  let situationInput: any = createDomEvent(
+    'input',
+    params.situation,
+    situation,
+    DomTipsView('风格')
+  );
 
-  let contextInput: any = createInputDom('textarea', params.context);
-  let contextDom = queryEle(context);
-  contextDom?.parentNode?.replaceChild(contextInput, contextDom);
-  contextInput.appendChild(DomTipsView('内容'));
-
-  let placeInput: any = createInputDom('input', params.place);
-  let placeDom = queryEle(place);
-  placeDom?.parentNode?.replaceChild(placeInput, placeDom);
-  placeInput.appendChild(DomTipsView('面积'));
-
-  let unitInput: any = createInputDom('input', params.unit);
-  let unitDom = queryEle(unit);
-  unitDom?.parentNode?.replaceChild(unitInput, unitDom);
-  unitInput.appendChild(DomTipsView('规格'));
-
-  let priceInput: any = createInputDom('input', params.price);
-  let priceDom = queryEle(price);
-  priceDom?.parentNode?.replaceChild(priceInput, priceDom);
-  priceInput.appendChild(DomTipsView('价格'));
-
-  let situationInput: any = createInputDom('input', params.situation);
-  let situationDom = queryEle(situation);
-  situationDom?.parentNode?.replaceChild(situationInput, situationDom);
-  situationInput.appendChild(DomTipsView('风格'));
   return {
     title: titleInput.value,
     textarea: contextInput.textContent,
@@ -315,20 +309,10 @@ export const SetBaiXinCheData = (): DomDataType => {
 };
 export const AddESC58Tips = (data: any, params: any): DomParamsType => {
   const { title, context, mileage } = data;
-  let titleInput: any = createInputDom('input', params.title);
-  let titleDom = queryEle(title);
-  titleDom?.parentNode?.replaceChild(titleInput, titleDom);
-  titleInput.appendChild(DomTipsView('标题'));
+  let titleInput: any = createDomEvent('input', params.title, title, DomTipsView('标题'));
+  let contextInput: any = createDomEvent('textarea', params.context, context, DomTipsView('内容'));
+  let mileageInput: any = createDomEvent('input', params.mileage, mileage, DomTipsView('里程'));
 
-  let contextInput: any = createInputDom('textarea', params.context);
-  let contextDom = queryEle(context);
-  contextDom?.parentNode?.replaceChild(contextInput, contextDom);
-  contextInput.appendChild(DomTipsView('内容'));
-
-  let mileageInput: any = createInputDom('input', params.mileage);
-  let mileageDom = queryEle(mileage);
-  mileageDom?.parentNode?.replaceChild(mileageInput, mileageDom);
-  mileageInput.appendChild(DomTipsView('里程'));
   return {
     title: titleInput.value,
     context: contextInput.textContent,
@@ -338,25 +322,11 @@ export const AddESC58Tips = (data: any, params: any): DomParamsType => {
 
 export const AddBaiXinCheTips = (data: any, params: any): DomParamsType => {
   const { title, context, mileage, price } = data;
-  let titleInput: any = createInputDom('input', params.title);
-  let titleDom = queryEle(title);
-  titleDom?.parentNode?.replaceChild(titleInput, titleDom);
-  titleInput.appendChild(DomTipsView('标题'));
+  let titleInput: any = createDomEvent('input', params.title, title, DomTipsView('标题'));
+  let contextInput: any = createDomEvent('textarea', params.context, context, DomTipsView('内容'));
+  let mileageInput: any = createDomEvent('input', params.mileage, mileage, DomTipsView('里程'));
+  let priceInput: any = createDomEvent('input', params.price, price, DomTipsView('价格'));
 
-  let contextInput: any = createInputDom('textarea', params.context);
-  let contextDom = queryEle(context);
-  contextDom?.parentNode?.replaceChild(contextInput, contextDom);
-  contextInput.appendChild(DomTipsView('内容'));
-
-  let mileageInput: any = createInputDom('input', params.mileage);
-  let mileageDom = queryEle(mileage);
-  mileageDom?.parentNode?.replaceChild(mileageInput, mileageDom);
-  mileageInput.appendChild(DomTipsView('里程'));
-
-  let priceInput: any = createInputDom('input', params.price);
-  let priceDom = queryEle(price);
-  priceDom?.parentNode?.replaceChild(priceInput, priceDom);
-  priceInput.appendChild(DomTipsView('价格'));
   return {
     title: titleInput.value,
     context: contextInput.textContent,
@@ -365,15 +335,15 @@ export const AddBaiXinCheTips = (data: any, params: any): DomParamsType => {
   };
 };
 
-export const Get58essjData = (data: DomParamsType): DomParamsType => {
+export const GetEsSjData = (data: DomParamsType): DomParamsType => {
   const { title, context, price } = data;
   let params: any = {};
   params.title = queryEle(title)?.textContent;
   params.context = queryEle(context)?.textContent;
-  params.price = queryEle(price)?.textContent;
-  return AddESSJ58Tips(data, params);
+  params.price = noStr(queryEle(price)?.textContent);
+  return AddEsSjTips(data, params);
 };
-export const Set58essjData = (): DomDataType => {
+export const SetEsSjData = (): DomDataType => {
   let valList: any = document.getElementsByClassName('textTips');
   let areaList: any = document.getElementsByClassName('areaTips');
   return {
@@ -382,23 +352,13 @@ export const Set58essjData = (): DomDataType => {
     price: valList[1]?.value,
   };
 };
-export const AddESSJ58Tips = (data: any, params: any): DomParamsType => {
+
+export const AddEsSjTips = (data: any, params: any): DomParamsType => {
   const { title, context, price } = data;
-  let titleInput: any = createInputDom('input', params.title);
-  let titleDom = queryEle(title);
-  titleDom?.parentNode?.replaceChild(titleInput, titleDom);
-  titleInput.appendChild(DomTipsView('标题'));
-
-  let contextInput: any = createInputDom('textarea', params.context);
-  let contextDom = queryEle(context);
-  contextDom?.parentNode?.replaceChild(contextInput, contextDom);
-  contextInput.appendChild(DomTipsView('内容'));
-
+  let titleInput = createDomEvent('input', params.title, title, DomTipsView('标题'));
+  let contextInput = createDomEvent('textarea', params.context, context, DomTipsView('内容'));
   let str = params.price.match(/\d+/g);
-  let priceInput: any = createInputDom('input', str[0]);
-  let priceDom = queryEle(price);
-  priceDom?.parentNode?.replaceChild(priceInput, priceDom);
-  priceInput.appendChild(DomTipsView('价格'));
+  let priceInput = createDomEvent('input', str[0], price, DomTipsView('价格'));
   return {
     title: titleInput?.value,
     context: contextInput.textContent,
@@ -419,9 +379,15 @@ export const DomDataSheet: any = {
   '5i5j.com/ershoufang/': () => GetEsfData(ESF5I),
   'baixing.com/ershouqiche/': () => GetBaiXinCheData(ESC_BAI_XIN),
   '58.com/ershouche/': () => GetErShouCheData(ESC58),
-  '58.com/shouji/': () => Get58essjData(ES_SJ58),
-  '58.com/diannao/': () => Get58essjData(ES_SJ58),
-  '58.com/danche/': () => Get58essjData(ES_SJ58),
+  '58.com/shouji/': () => GetEsSjData(ES_SJ58),
+  'baixing.com/shouji/': () => GetEsSjData(ES_SJ_BAI_XIN),
+  '58.com/diannao/': () => GetEsSjData(ES_SJ58),
+  '58.com/bijibendiannao/': () => GetEsSjData(ES_SJ58),
+  'baixing.com/bijiben/': () => GetEsSjData(ES_SJ_BAI_XIN),
+  'baixing.com/chongwujiaoyi/': () => GetEsSjData(ES_SJ_BAI_XIN),
+  'baixing.com/chongwumao/': () => GetEsSjData(ES_SJ_BAI_XIN),
+  '58.com/cat/': () => GetEsSjData(CAT_ES58),
+  '58.com/danche/': () => GetEsSjData(ES_SJ58),
   'www.ziroom.com/x/': () => GetChuZuData(ROOM_X),
   'www.jd.com': () => undefined,
   'www.taobao.com': () => undefined,
@@ -440,9 +406,15 @@ export const GetResultSheet: any = {
   '5i5j.com/ershoufang/': () => SetRsfData(),
   'baixing.com/ershouqiche/': () => SetBaiXinCheData(),
   '58.com/ershouche/': () => SetEscData(),
-  '58.com/shouji/': () => Set58essjData(),
-  '58.com/diannao/': () => Set58essjData(),
-  '58.com/danche/': () => Set58essjData(),
+  '58.com/shouji/': () => SetEsSjData(),
+  'baixing.com/shouji/': () => SetEsSjData(),
+  '58.com/diannao/': () => SetEsSjData(),
+  '58.com/bijibendiannao/': () => SetEsSjData(),
+  'baixing.com/bijiben/': () => SetEsSjData(),
+  'baixing.com/chongwujiaoyi/': () => SetEsSjData(),
+  'baixing.com/chongwumao/': () => SetEsSjData(),
+  '58.com/cat/': () => SetEsSjData(),
+  '58.com/danche/': () => SetEsSjData(),
   'www.ziroom.com/x/': () => SetZuFangData(),
   'www.jd.com': () => undefined,
   'www.taobao.com': () => undefined,

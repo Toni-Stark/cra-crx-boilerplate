@@ -7,10 +7,12 @@ export const copyInfoToServices = (info: any) => {
     console.log('info-res------------------>');
   });
 };
-export const sendMessageSetIndex = (key: string) => {
-  chrome.runtime.sendMessage({ type: SETTING_INDEX_SERVICES, cate: key }).then((res) => {
-    console.log('info-res------------------>');
-    console.log(res);
-    console.log('info-res------------------>');
-  });
+export const sendMessageSetIndex = (key: string, addText: string) => {
+  chrome.runtime
+    .sendMessage({ type: SETTING_INDEX_SERVICES, cate: key, address: addText })
+    .then((res) => {
+      console.log('info-res------------------>');
+      console.log(res);
+      console.log('info-res------------------>');
+    });
 };

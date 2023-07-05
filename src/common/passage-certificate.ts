@@ -120,10 +120,10 @@ export const getTranslateAddress = (str: string) => {
 };
 
 export function trimSpecial(str: string) {
-  if (str != '') {
+  if (str !== '') {
     // const pattern =
     //     /[\.`~!@#$^\-&*()=|{}':;',\\\[\]<>\/?~！@#￥……&*（）——|{}【】'；：""'。，、？\s]/g;
-    const pattern = /[`~!@#$^\-&*()=|{}':;',\\\[\]<>\/?~！@#￥……&*（）——|{}【】'；：""'。？\s]/g;
+    const pattern = /[`~!@#$^\-&*()=|{}':;,\\[\]<>/?！￥…（）—【】；："。？\s]/g;
     str = str.replace(pattern, '');
   }
   return str;
