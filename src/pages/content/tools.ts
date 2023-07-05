@@ -114,11 +114,14 @@ export const getChePriceRandom = (title: any, context: any, val: any) => {
     return cReg[0].match(numReg)[0];
   }
 };
-export const getPriceRandom = (title: any, context: any) => {
+export const getPriceRandom = (title: any, context: any, val?: any) => {
   let reg = /[0-9]{1,5}(元|(万元))/;
   let numReg = /\d+/;
   let tReg = title?.match(reg);
   let cReg = context?.match(reg);
+  if (val) {
+    return val;
+  }
   if (!tReg && !cReg) {
     return Math.ceil(Math.random() * 20 + 5) * 100;
   }

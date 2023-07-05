@@ -123,7 +123,7 @@ export function trimSpecial(str: string) {
   if (str !== '') {
     // const pattern =
     //     /[\.`~!@#$^\-&*()=|{}':;',\\\[\]<>\/?~！@#￥……&*（）——|{}【】'；：""'。，、？\s]/g;
-    const pattern = /[`~!@#$^\-&*()=|{}':;,\\[\]<>/?！￥…（）—【】；："。？\s]/g;
+    const pattern = /[`~#$^&*()=|{};,\\[\]…【】；？\s]/g;
     str = str.replace(pattern, '');
   }
   return str;

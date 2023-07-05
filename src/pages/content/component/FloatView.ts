@@ -26,6 +26,10 @@ export const RegUrlConfig = (local: any) => {
   let izu = path.indexOf('zu.anjuke');
   let ian = path.indexOf('anjuke');
   let iba = path.indexOf('baixing');
+  let ibo = path.indexOf('zhipin');
+  let ich = path.indexOf('che168');
+  let iic = path.indexOf('ichong123');
+  let izi = path.indexOf('ziroom');
   if (i58 >= 0) {
     return path.slice(i58);
   }
@@ -40,6 +44,18 @@ export const RegUrlConfig = (local: any) => {
   }
   if (iba >= 0) {
     return path.slice(iba);
+  }
+  if (ibo >= 0) {
+    return path.slice(ibo);
+  }
+  if (ich >= 0) {
+    return path.slice(ich);
+  }
+  if (iic >= 0) {
+    return path.slice(iic);
+  }
+  if (izi >= 0) {
+    return path.slice(izi);
   }
 };
 
@@ -56,6 +72,7 @@ export const createContentView = () => {
   CreateICPModal();
   // CreateMapModal();
   settingServerIndex();
+  console.log(RegUrlConfig(document.location));
   if (DomDataSheet.hasOwnProperty(RegUrlConfig(document.location))) {
     DomDataSheet[RegUrlConfig(document.location)]();
   }
@@ -100,7 +117,7 @@ const settingServerIndex = () => {
     { name: '招聘', key: 'ZHAO_PING' },
     { name: '卖房', key: 'MAI_FANG' },
     { name: '卖车', key: 'MAI_CHE' },
-    { name: '手机', key: 'SHOU_JI' },
+    { name: '手机&宠物', key: 'SHOU_JI' },
   ];
   let Index = queryEle('.SERVER_INDEX');
   if (Index) Index.remove();

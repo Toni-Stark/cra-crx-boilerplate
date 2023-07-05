@@ -216,7 +216,7 @@ export const putDownICPData = (data: any) => {
   if (data.cate === 'SHOU_JI') {
     for (let i in SHOU_JI) {
       if (i === 'price') {
-        let ranNum: any = getPriceRandom(data.title, data.context);
+        let ranNum: any = getPriceRandom(data.title, data.context, data[i]);
         let e = new Event('input');
         let formEle: any = queryEle(SHOU_JI[i]);
         formEle.value = ranNum;

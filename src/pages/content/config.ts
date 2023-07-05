@@ -1,5 +1,4 @@
 import { noStr, queryEle } from '@/pages/content/tools';
-import { ElementType } from '@/common/types';
 import { RegUrlConfig } from '@/pages/content/component/FloatView';
 
 export const Boss = {
@@ -47,7 +46,7 @@ export const BAI_XIN_FANG = {
 };
 export const ESC58 = {
   title: '.info-title',
-  context: '.info-usr-desc_cont',
+  context: '.info-usr-descs',
   mileage: '.info-meta-s>.info-meta>.info-meta_val',
 };
 export const ES_SJ58 = {
@@ -62,8 +61,18 @@ export const ES_SJ_BAI_XIN = {
 };
 export const CAT_ES58 = {
   title: '.detail-title__name',
-  context: '.description_con>p',
+  context: '.description_con',
   price: '.infocard__container__item__main__text--price',
+};
+export const DOG_ES58 = {
+  title: '.mainTitle_content>h1',
+  context: '.descriptionInfo>div>span',
+  price: '.price',
+};
+export const HOT_ES58 = {
+  title: '.tit-area>.tit',
+  context: '.txt>div',
+  price: '.attr-info>dt>span',
 };
 
 export const CHE168 = {
@@ -135,7 +144,7 @@ export const SetBossData = (): DomDataType => {
   let areaList: any = document.getElementsByClassName('areaTips');
   return {
     title: valList[0]?.value,
-    context: areaList[0]?.textContent,
+    context: areaList[0]?.value,
     company_name: valList[2]?.value,
     personnel: valList[1]?.value,
     address: valList[3].value,
@@ -156,6 +165,8 @@ export const createDomEvent = (
 };
 
 export const AddBossTips = (data: any, params: any): DomParamsType => {
+  console.log('招聘信息', data);
+
   const { title, context, company_name, personnel, address } = data;
   let titleInput: any = createDomEvent('input', params.title, title, DomTipsView('标题'));
   let contextInput: any = createDomEvent('textarea', params.context, context, DomTipsView('内容'));
@@ -172,10 +183,10 @@ export const AddBossTips = (data: any, params: any): DomParamsType => {
     DomTipsView('联系人')
   );
   let addressInput: any = createDomEvent('input', params.address, address, DomTipsView('地址'));
-
+  console.log('招聘信息');
   return {
     title: titleInput.value,
-    textarea: contextInput.textContent,
+    textarea: contextInput.value,
     company_name: companyInput.value,
     personnel: personnelInput.value,
     address: addressInput.value,
@@ -194,7 +205,7 @@ export const SetZuFangData = (): DomDataType => {
   let areaList: any = document.getElementsByClassName('areaTips');
   return {
     title: valList[0]?.value,
-    context: areaList[0]?.textContent,
+    context: areaList[0]?.value,
   };
 };
 export const AddCZ58Tips = (data: any, params: any): DomParamsType => {
@@ -227,7 +238,7 @@ export const SetRsfData = (): DomDataType => {
   let areaList: any = document.getElementsByClassName('areaTips');
   return {
     title: valList[0]?.value,
-    context: areaList[0]?.textContent,
+    context: areaList[0]?.value,
     place: valList[3]?.value,
     unit: valList[2]?.value,
     price: valList[1].value,
@@ -239,7 +250,7 @@ export const SetBaiXinData = (): DomDataType => {
   let areaList: any = document.getElementsByClassName('areaTips');
   return {
     title: valList[0]?.value,
-    context: areaList[0]?.textContent,
+    context: areaList[0]?.value,
     place: valList[2]?.value,
     unit: valList[3]?.value,
     price: valList[1].value,
@@ -293,7 +304,7 @@ export const SetEscData = (): DomDataType => {
   let areaList: any = document.getElementsByClassName('areaTips');
   return {
     title: valList[0]?.value,
-    context: areaList[0]?.textContent,
+    context: areaList[0]?.value,
     mileage: valList[1].value,
   };
 };
@@ -302,7 +313,7 @@ export const SetBaiXinCheData = (): DomDataType => {
   let areaList: any = document.getElementsByClassName('areaTips');
   return {
     title: valList[0]?.value,
-    context: areaList[0]?.textContent,
+    context: areaList[0]?.value,
     mileage: valList[2].value,
     price: valList[1].value,
   };
@@ -312,7 +323,6 @@ export const AddESC58Tips = (data: any, params: any): DomParamsType => {
   let titleInput: any = createDomEvent('input', params.title, title, DomTipsView('标题'));
   let contextInput: any = createDomEvent('textarea', params.context, context, DomTipsView('内容'));
   let mileageInput: any = createDomEvent('input', params.mileage, mileage, DomTipsView('里程'));
-
   return {
     title: titleInput.value,
     context: contextInput.textContent,
@@ -348,7 +358,7 @@ export const SetEsSjData = (): DomDataType => {
   let areaList: any = document.getElementsByClassName('areaTips');
   return {
     title: valList[0]?.value,
-    context: areaList[0]?.textContent,
+    context: areaList[0]?.value,
     price: valList[1]?.value,
   };
 };
@@ -367,14 +377,15 @@ export const AddEsSjTips = (data: any, params: any): DomParamsType => {
 };
 
 export const DomDataSheet: any = {
-  'www.zhipin.com/job_detail/': () => GetBossData(Boss),
+  'zhipin.com/job_detail/': () => GetBossData(Boss),
   '58.com/zufang/': () => GetChuZuData(CZ58),
   '58.com/hezu/': () => GetChuZuData(CZ58),
   'zu.anjuke.com/fangyuan/': () => GetChuZuData(ZU_AN_JU_KE),
   'baixing.com/zhengzu/': () => GetChuZuData(BAI_XIN_ZU),
+  'baixing.com/duanzu/': () => GetChuZuData(BAI_XIN_ZU),
   'anjuke.com/prop/': () => GetEsfData(AN_JU_KE_FANG),
   'baixing.com/ershoufang/': () => GetEsfData(BAI_XIN_FANG),
-  'www.che168.com/dealer/': () => GetErShouCheData(CHE168),
+  'che168.com/dealer/': () => GetErShouCheData(CHE168),
   '58.com/ershoufang/': () => GetEsfData(ESF58),
   '5i5j.com/ershoufang/': () => GetEsfData(ESF5I),
   'baixing.com/ershouqiche/': () => GetBaiXinCheData(ESC_BAI_XIN),
@@ -387,21 +398,24 @@ export const DomDataSheet: any = {
   'baixing.com/chongwujiaoyi/': () => GetEsSjData(ES_SJ_BAI_XIN),
   'baixing.com/chongwumao/': () => GetEsSjData(ES_SJ_BAI_XIN),
   '58.com/cat/': () => GetEsSjData(CAT_ES58),
+  '58.com/dog/': () => GetEsSjData(DOG_ES58),
+  'ichong123.com/p/': () => GetEsSjData(HOT_ES58),
   '58.com/danche/': () => GetEsSjData(ES_SJ58),
-  'www.ziroom.com/x/': () => GetChuZuData(ROOM_X),
+  'ziroom.com/x/': () => GetChuZuData(ROOM_X),
   'www.jd.com': () => undefined,
   'www.taobao.com': () => undefined,
 };
 
 export const GetResultSheet: any = {
-  'www.zhipin.com/job_detail/': () => SetBossData(),
+  'zhipin.com/job_detail/': () => SetBossData(),
   '58.com/zufang/': () => SetZuFangData(),
   '58.com/hezu/': () => SetZuFangData(),
   'zu.anjuke.com/fangyuan/': () => SetZuFangData(),
   'baixing.com/zhengzu/': () => SetZuFangData(),
+  'baixing.com/duanzu/': () => SetZuFangData(),
   'anjuke.com/prop/': () => SetRsfData(),
   'baixing.com/ershoufang/': () => SetBaiXinData(),
-  'www.che168.com/dealer/': () => SetEscData(),
+  'che168.com/dealer/': () => SetEscData(),
   '58.com/ershoufang/': () => SetRsfData(),
   '5i5j.com/ershoufang/': () => SetRsfData(),
   'baixing.com/ershouqiche/': () => SetBaiXinCheData(),
@@ -414,8 +428,10 @@ export const GetResultSheet: any = {
   'baixing.com/chongwujiaoyi/': () => SetEsSjData(),
   'baixing.com/chongwumao/': () => SetEsSjData(),
   '58.com/cat/': () => SetEsSjData(),
+  '58.com/dog/': () => SetEsSjData(),
+  'ichong123.com/p/': () => SetEsSjData(),
   '58.com/danche/': () => SetEsSjData(),
-  'www.ziroom.com/x/': () => SetZuFangData(),
+  'ziroom.com/x/': () => SetZuFangData(),
   'www.jd.com': () => undefined,
   'www.taobao.com': () => undefined,
 };
