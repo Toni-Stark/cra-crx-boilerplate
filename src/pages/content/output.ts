@@ -62,7 +62,17 @@ export const SET_DATE: any = {
   submit: '.is-plain',
 };
 
-export const SHANG_PING: any = {};
+export const ALL_SHANG_PING: any = {
+  title: '#tab1>.form-table>tbody>tr>td>.form-control',
+  price: '#goodsBaseBody>tr>td:nth-child(4)>.form-control',
+};
+
+export const SHANG_PING: any = {
+  e_price: '#goodsBaseBody>tr>td:nth-child(3)>.form-control',
+  user: '#tab1>.form-table>tbody>tr:nth-child(3)>td>.form-control',
+  cate: '#tab1>.form-table>tbody>tr:nth-child(4)>td>.btn-primary',
+  context: '.ck-editor__editable_inline',
+};
 
 export const DispatchEvent = (dom: any, event: string) => {
   let e = new Event(event);
@@ -250,34 +260,46 @@ export const putDownICPData = (data: any) => {
 };
 export const putDownEDIData = (data: any) => {
   console.log(data, 'edi');
+  for (let i in ALL_SHANG_PING) {
+    if (data.hasOwnProperty(i)) {
+      let formEle: any = queryEle(ALL_SHANG_PING[i]);
+      if (formEle) {
+        formEle.value = data[i];
+      }
+      DispatchEvent(formEle, 'input');
+    }
+  }
   if (data.cate === 'SHANG_PING') {
     for (let i in SHANG_PING) {
-      if (i === 'price') {
-        let ranNum: any = getPriceRandom(data.title, data.context);
-        let formEle: any = queryEle(ZU_FANG[i]);
+      if (i === 'e_price') {
+        let ranNum: any = Math.ceil(Math.random() * 50) + Number(data.price);
+        let formEle: any = queryEle(SHANG_PING[i]);
         formEle.value = ranNum;
         DispatchEvent(formEle, 'input');
       }
-      if (i === 'house') {
-        let clickDom: any = queryEle(
-          '.el-col>div>.el-form-item:nth-child(2)>.el-form-item__content>.el-select'
-        );
-        clickDom?.click();
-        setTimeout(() => {
-          let ranNum: any = getRegRandom(data.title, data.context);
-          if (ranNum?.index === 1) {
-            let formEle: any = queryEle(PERMANENT['context']);
-            formEle.textContent = ranNum.text;
-            ranNum = ranNum.num;
-          }
-          let text: any = queryEle(ZU_FANG[i] + ':nth-child(' + ranNum + ')>span');
-          text?.click();
-        }, 200);
+      if (i === 'user') {
+        let selList: any = queryEle(SHANG_PING[i]);
+        let selItems: any = queryEleAll(SHANG_PING[i] + '>option');
+        selList.value = selItems[Math.floor(Math.random() * 5) + 1].value;
       }
-      if (i === 'area') {
-        let formEle: any = queryEle(ZU_FANG[i]);
-        formEle.value = getAreaRandom(data.title, data.context);
-        DispatchEvent(formEle, 'input');
+      if (i === 'cate') {
+        let btn: any = queryEle(SHANG_PING[i]);
+        btn.click();
+        setTimeout(() => {
+          let num = Math.floor(Math.random() * 2) + 1;
+          let conDom: any = queryEle('.aui_state_full>iframe');
+          let domList = conDom?.contentDocument.querySelectorAll('#categoryBox>.select>li>label');
+          domList[num].click();
+          setTimeout(() => {
+            let confirm: any = queryEle('.aui_state_highlight');
+            confirm?.click();
+          }, 200);
+        }, 2000);
+      }
+      if (i === 'context') {
+        let richDom: any = queryEle('.ck-editor__editable_inline');
+        let newText = document.createTextNode(data[i]);
+        richDom.appendChild(newText);
       }
     }
   }

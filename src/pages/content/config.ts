@@ -111,9 +111,7 @@ export const TAO_BAO = {
 export const TIAN_MAO = {
   title: '.ItemHeader--mainTitle--3CIjqW5',
   price: '.Price--priceText--2nLbVda',
-  e_price:
-    '.ItemDetail--attrs--3t-mTb3>div>.Attrs--attrSection--2_G8xGa:nth-child(2)>.Attrs--attr--33ShB6X',
-  context: '.descV8-richtext',
+  context: '.descV8-container',
 };
 
 export const DomTipsView = (str: string | null) => {
@@ -212,12 +210,10 @@ export const GetChuZuData = (data: DomParamsType): DomParamsType => {
 };
 
 export const GetEDIData = (data: DomParamsType) => {
-  const { title, context, price, e_price } = data;
-  console.log(data, 'data');
+  const { title, context, price } = data;
   let params: any = {};
   params.title = queryEle(title)?.textContent;
   params.price = noStr(queryEle(price)?.textContent);
-  params.e_price = noStr(queryEle(e_price)?.textContent);
   params.context = queryEle(context)?.innerHTML;
   return AddEDITips(data, params);
 };
@@ -231,7 +227,13 @@ export const SetZuFangData = (): DomDataType => {
   };
 };
 export const SetTianMao = (): DomDataType => {
-  return {};
+  let valList: any = document.getElementsByClassName('textTips');
+  let areaList: any = document.getElementsByClassName('areaTips');
+  return {
+    title: valList[0]?.value,
+    price: valList[1]?.value,
+    context: areaList[0]?.value,
+  };
 };
 
 export const AddCZ58Tips = (data: any, params: any): DomParamsType => {
@@ -245,17 +247,14 @@ export const AddCZ58Tips = (data: any, params: any): DomParamsType => {
   };
 };
 export const AddEDITips = (data: any, params: any): DomParamsType => {
-  const { title, context, price, e_price } = data;
+  const { title, context, price } = data;
   let titleInput: any = createDomEvent('input', params.title, title, DomTipsView('标题'));
   let priceInput: any = createDomEvent('input', params.price, price, DomTipsView('价格'));
-  let ePriceInput: any = createDomEvent('input', params.e_price, e_price, DomTipsView('原价'));
   let contextInput: any = createDomEvent('textarea', params.context, context, DomTipsView('内容'));
-
   return {
     title: titleInput.value,
-    textarea: contextInput.textContent,
+    textarea: contextInput.innerHTML,
     price: priceInput.value,
-    e_price: ePriceInput.value,
   };
 };
 export const GetEsfData = (data: DomParamsType): DomParamsType => {
@@ -267,9 +266,6 @@ export const GetEsfData = (data: DomParamsType): DomParamsType => {
   params.unit = queryEle(unit)?.textContent;
   params.price = noStr(queryEle(price)?.textContent);
   params.situation = queryEle(situation)?.textContent;
-  console.log('params--------------');
-  console.log(params);
-  console.log('params--------------');
   return AddESF58Tips(data, params);
 };
 export const SetRsfData = (): DomDataType => {

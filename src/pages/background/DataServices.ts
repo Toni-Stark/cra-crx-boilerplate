@@ -16,11 +16,11 @@ import { createPeopleNameList, getTranslateAddress } from '@/common/passage-cert
 
 export const listenerDataInfoMessage = (mobiles: string[]) => {
   chrome.runtime.onMessage.addListener(function (response, sender, sendResponse) {
-    console.log(response?.type === COPY_INFO_TO_SERVICES, COPY_INFO_TO_SERVICES);
     if (response?.type === COPY_INFO_TO_SERVICES) {
       gettingStorage('config', (res) => {
         console.log(response, 'type', sender, 'storage', res);
         if (!res) return true;
+        console.log(res);
         if (res.config.type === ICP) {
           sendMessageQueryCurrent(res.config.serverId, {
             msg: PUT_DOWN_ICP_DATA,
@@ -36,6 +36,7 @@ export const listenerDataInfoMessage = (mobiles: string[]) => {
           sendMessageQueryCurrent(res.config.serverId, {
             msg: PUT_DOWN_EDI_DATA,
             ...response,
+            cate: res.config.cate,
           });
         }
       });

@@ -12,12 +12,12 @@ chrome.runtime.onMessage.addListener(
     sender: chrome.runtime.MessageSender,
     sendResponse: (response: string) => void
   ) => {
-    console.log(request, sender);
     if (document.readyState !== 'complete') return;
     if (request?.msg === OPEN_MOUSE_LISTENER) {
       createContentView();
       return;
     }
+    console.log(sender, request);
     if (request?.msg === PUT_DOWN_ICP_DATA) {
       putDownDataForIcpServer(sender, request);
       return;
