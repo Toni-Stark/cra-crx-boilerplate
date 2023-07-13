@@ -105,6 +105,17 @@ export const TaoBao = {
   title: '.container>.viewad-main>.viewad-content>.viewad-header .viewad-title>h1',
 };
 
+export const TAO_BAO = {
+  title: '.tb-main-title',
+};
+export const TIAN_MAO = {
+  title: '.ItemHeader--mainTitle--3CIjqW5',
+  price: '.Price--priceText--2nLbVda',
+  e_price:
+    '.ItemDetail--attrs--3t-mTb3>div>.Attrs--attrSection--2_G8xGa:nth-child(2)>.Attrs--attr--33ShB6X',
+  context: '.descV8-richtext',
+};
+
 export const DomTipsView = (str: string | null) => {
   let view = document.createElement('div');
   view.className = 'tipsView';
@@ -183,7 +194,6 @@ export const AddBossTips = (data: any, params: any): DomParamsType => {
     DomTipsView('联系人')
   );
   let addressInput: any = createDomEvent('input', params.address, address, DomTipsView('地址'));
-  console.log('招聘信息');
   return {
     title: titleInput.value,
     textarea: contextInput.value,
@@ -200,6 +210,18 @@ export const GetChuZuData = (data: DomParamsType): DomParamsType => {
   params.context = queryEle(context)?.innerHTML.replaceAll('<br>', '\r');
   return AddCZ58Tips(data, params);
 };
+
+export const GetEDIData = (data: DomParamsType) => {
+  const { title, context, price, e_price } = data;
+  console.log(data, 'data');
+  let params: any = {};
+  params.title = queryEle(title)?.textContent;
+  params.price = noStr(queryEle(price)?.textContent);
+  params.e_price = noStr(queryEle(e_price)?.textContent);
+  params.context = queryEle(context)?.innerHTML;
+  return AddEDITips(data, params);
+};
+
 export const SetZuFangData = (): DomDataType => {
   let valList: any = document.getElementsByClassName('textTips');
   let areaList: any = document.getElementsByClassName('areaTips');
@@ -208,6 +230,10 @@ export const SetZuFangData = (): DomDataType => {
     context: areaList[0]?.value,
   };
 };
+export const SetTianMao = (): DomDataType => {
+  return {};
+};
+
 export const AddCZ58Tips = (data: any, params: any): DomParamsType => {
   const { title, context } = data;
   let titleInput: any = createDomEvent('input', params.title, title, DomTipsView('标题'));
@@ -218,7 +244,20 @@ export const AddCZ58Tips = (data: any, params: any): DomParamsType => {
     textarea: contextInput.textContent,
   };
 };
+export const AddEDITips = (data: any, params: any): DomParamsType => {
+  const { title, context, price, e_price } = data;
+  let titleInput: any = createDomEvent('input', params.title, title, DomTipsView('标题'));
+  let priceInput: any = createDomEvent('input', params.price, price, DomTipsView('价格'));
+  let ePriceInput: any = createDomEvent('input', params.e_price, e_price, DomTipsView('原价'));
+  let contextInput: any = createDomEvent('textarea', params.context, context, DomTipsView('内容'));
 
+  return {
+    title: titleInput.value,
+    textarea: contextInput.textContent,
+    price: priceInput.value,
+    e_price: ePriceInput.value,
+  };
+};
 export const GetEsfData = (data: DomParamsType): DomParamsType => {
   const { title, context, place, unit, price, situation } = data;
   let params: any = {};
@@ -403,7 +442,8 @@ export const DomDataSheet: any = {
   '58.com/danche/': () => GetEsSjData(ES_SJ58),
   'ziroom.com/x/': () => GetChuZuData(ROOM_X),
   'www.jd.com': () => undefined,
-  'www.taobao.com': () => undefined,
+  'taobao.com': () => GetEDIData(TAO_BAO),
+  'tmall.com': () => GetEDIData(TIAN_MAO),
 };
 
 export const GetResultSheet: any = {
@@ -433,7 +473,8 @@ export const GetResultSheet: any = {
   '58.com/danche/': () => SetEsSjData(),
   'ziroom.com/x/': () => SetZuFangData(),
   'www.jd.com': () => undefined,
-  'www.taobao.com': () => undefined,
+  'taobao.com': () => SetTianMao(),
+  'tmall.com': () => SetTianMao(),
 };
 
 export const getHostDataParams = (local: any) => {

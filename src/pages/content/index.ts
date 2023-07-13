@@ -1,5 +1,9 @@
-import { createContentView, putDownDataForServer } from '@/pages/content/component/FloatView';
-import { OPEN_MOUSE_LISTENER, PUT_DOWN_DATA } from '@/common/agreement';
+import {
+  createContentView,
+  putDownDataForEdiServer,
+  putDownDataForIcpServer,
+} from '@/pages/content/component/FloatView';
+import { OPEN_MOUSE_LISTENER, PUT_DOWN_EDI_DATA, PUT_DOWN_ICP_DATA } from '@/common/agreement';
 import { MessageEventType } from '@/common/types';
 console.log('context');
 chrome.runtime.onMessage.addListener(
@@ -8,14 +12,18 @@ chrome.runtime.onMessage.addListener(
     sender: chrome.runtime.MessageSender,
     sendResponse: (response: string) => void
   ) => {
+    console.log(request, sender);
     if (document.readyState !== 'complete') return;
-    console.log('[content.js]', request, sender);
     if (request?.msg === OPEN_MOUSE_LISTENER) {
       createContentView();
       return;
     }
-    if (request?.msg === PUT_DOWN_DATA) {
-      putDownDataForServer(sender, request);
+    if (request?.msg === PUT_DOWN_ICP_DATA) {
+      putDownDataForIcpServer(sender, request);
+      return;
+    }
+    if (request?.msg === PUT_DOWN_EDI_DATA) {
+      putDownDataForEdiServer(sender, request);
       return;
     }
     sendResponse('received');

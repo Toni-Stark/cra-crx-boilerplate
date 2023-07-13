@@ -54,10 +54,23 @@ export const SHOU_JI: any = {
   price: '.el-col>div>.el-form-item>.el-form-item__content>.el-input>.el-input__inner',
 };
 
+export const SET_DATE: any = {
+  focus:
+    '.el-row>.el-col:nth-child(2)>.el-form-item>.el-form-item__content>.el-date-editor>.el-input__inner',
+  nextYear: '.el-icon-d-arrow-right',
+  date: '.el-date-table>tbody>.el-date-table__row>.next-month>div>span',
+  submit: '.is-plain',
+};
+
+export const SHANG_PING: any = {};
+
+export const DispatchEvent = (dom: any, event: string) => {
+  let e = new Event(event);
+  dom?.dispatchEvent(e);
+};
+
 export const putDownICPData = (data: any) => {
-  console.log('所有数据', data);
   for (let i in PERMANENT) {
-    let e = new Event('input');
     if (data.hasOwnProperty(i)) {
       let formEle: any = queryEle(PERMANENT[i]);
       if (i === 'context') {
@@ -67,7 +80,7 @@ export const putDownICPData = (data: any) => {
           formEle.value = data[i];
         }
       }
-      formEle?.dispatchEvent(e);
+      DispatchEvent(formEle, 'input');
     }
     if (i === 'sle_address') {
       let clickDom: any = queryEle('.el-cascader__label');
@@ -80,12 +93,11 @@ export const putDownICPData = (data: any) => {
   }
   if (data.cate === 'ZU_FANG') {
     for (let i in ZU_FANG) {
-      let e = new Event('input');
       if (i === 'price') {
         let ranNum: any = getPriceRandom(data.title, data.context);
         let formEle: any = queryEle(ZU_FANG[i]);
         formEle.value = ranNum;
-        formEle?.dispatchEvent(e);
+        DispatchEvent(formEle, 'input');
       }
       if (i === 'house') {
         let clickDom: any = queryEle(
@@ -106,17 +118,16 @@ export const putDownICPData = (data: any) => {
       if (i === 'area') {
         let formEle: any = queryEle(ZU_FANG[i]);
         formEle.value = getAreaRandom(data.title, data.context);
-        formEle?.dispatchEvent(e);
+        DispatchEvent(formEle, 'input');
       }
     }
   }
   if (data.cate === 'ZHAO_PING') {
     for (let i in ZHAO_PING) {
       if (i === 'company_name') {
-        let e = new Event('input');
         let formEle: any = queryEle(ZHAO_PING[i]);
         formEle.value = data[i];
-        formEle?.dispatchEvent(e);
+        DispatchEvent(formEle, 'input');
       }
       if (i === 'price') {
         let clickDom: any = queryEle(ZHAO_PING[i]);
@@ -136,10 +147,9 @@ export const putDownICPData = (data: any) => {
   if (data.cate === 'MAI_FANG') {
     for (let i in MAI_FANG) {
       if (i === 'price') {
-        let e = new Event('input');
         let formEle: any = queryEle(MAI_FANG[i]);
         formEle.value = data[i];
-        formEle?.dispatchEvent(e);
+        DispatchEvent(formEle, 'input');
       }
       if (i === 'unit') {
         let clickDom: any = queryEle(MAI_FANG[i]);
@@ -157,10 +167,9 @@ export const putDownICPData = (data: any) => {
         }, 200);
       }
       if (i === 'place') {
-        let e = new Event('input');
         let formEle: any = queryEle(MAI_FANG[i]);
         formEle.value = data[i];
-        formEle?.dispatchEvent(e);
+        DispatchEvent(formEle, 'input');
       }
       if (i === 'direction') {
         let clickDom: any = queryEle(MAI_FANG[i]);
@@ -199,17 +208,15 @@ export const putDownICPData = (data: any) => {
   if (data.cate === 'MAI_CHE') {
     for (let i in MAI_CHE) {
       if (i === 'price') {
-        let e = new Event('input');
         let formEle: any = queryEle(MAI_CHE[i]);
         formEle.value = getChePriceRandom(data.title, data.context, data[i]);
-        formEle?.dispatchEvent(e);
+        DispatchEvent(formEle, 'input');
       }
       if (i === 'mileage') {
         let ranNum: any = getMinxRandom(data.title, data.context, data[i]);
         let formEle: any = queryEle(MAI_CHE[i]);
         formEle.value = ranNum;
-        let e = new Event('input');
-        formEle?.dispatchEvent(e);
+        DispatchEvent(formEle, 'input');
       }
     }
   }
@@ -217,10 +224,60 @@ export const putDownICPData = (data: any) => {
     for (let i in SHOU_JI) {
       if (i === 'price') {
         let ranNum: any = getPriceRandom(data.title, data.context, data[i]);
-        let e = new Event('input');
         let formEle: any = queryEle(SHOU_JI[i]);
         formEle.value = ranNum;
-        formEle?.dispatchEvent(e);
+        DispatchEvent(formEle, 'input');
+      }
+    }
+  }
+
+  let dom1: any = queryEle(SET_DATE.focus);
+  DispatchEvent(dom1, 'focus');
+  setTimeout(() => {
+    let dom2: any = queryEle(SET_DATE.nextYear);
+    DispatchEvent(dom2, 'click');
+    DispatchEvent(dom2, 'click');
+    DispatchEvent(dom2, 'click');
+    setTimeout(() => {
+      let dom3: any = queryEle(SET_DATE.date);
+      dom3.click();
+      setTimeout(() => {
+        let dom4: any = queryEle(SET_DATE.submit);
+        DispatchEvent(dom4, 'click');
+      }, 100);
+    }, 100);
+  }, 100);
+};
+export const putDownEDIData = (data: any) => {
+  console.log(data, 'edi');
+  if (data.cate === 'SHANG_PING') {
+    for (let i in SHANG_PING) {
+      if (i === 'price') {
+        let ranNum: any = getPriceRandom(data.title, data.context);
+        let formEle: any = queryEle(ZU_FANG[i]);
+        formEle.value = ranNum;
+        DispatchEvent(formEle, 'input');
+      }
+      if (i === 'house') {
+        let clickDom: any = queryEle(
+          '.el-col>div>.el-form-item:nth-child(2)>.el-form-item__content>.el-select'
+        );
+        clickDom?.click();
+        setTimeout(() => {
+          let ranNum: any = getRegRandom(data.title, data.context);
+          if (ranNum?.index === 1) {
+            let formEle: any = queryEle(PERMANENT['context']);
+            formEle.textContent = ranNum.text;
+            ranNum = ranNum.num;
+          }
+          let text: any = queryEle(ZU_FANG[i] + ':nth-child(' + ranNum + ')>span');
+          text?.click();
+        }, 200);
+      }
+      if (i === 'area') {
+        let formEle: any = queryEle(ZU_FANG[i]);
+        formEle.value = getAreaRandom(data.title, data.context);
+        DispatchEvent(formEle, 'input');
       }
     }
   }
