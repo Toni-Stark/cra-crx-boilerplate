@@ -38,7 +38,7 @@ export const AN_JU_KE_FANG = {
 };
 export const BAI_XIN_FANG = {
   title: '.viewad-title>h1',
-  context: '.viewad-text>p',
+  context: '.viewad-text',
   place: '.viewad-detail>.viewad-meta2>.viewad-meta2-item:first-child>label:last-child',
   unit: '.viewad-detail>.viewad-meta2>.viewad-meta2-item:nth-child(4)>label:last-child',
   price: '.viewad-actions>.price',
@@ -111,7 +111,7 @@ export const TAO_BAO = {
 export const TIAN_MAO = {
   title: '.ItemHeader--mainTitle--3CIjqW5',
   price: '.Price--priceText--2nLbVda',
-  context: '.descV8-container',
+  // context: '.descV8-container',
 };
 
 export const DomTipsView = (str: string | null) => {
@@ -174,8 +174,6 @@ export const createDomEvent = (
 };
 
 export const AddBossTips = (data: any, params: any): DomParamsType => {
-  console.log('招聘信息', data);
-
   const { title, context, company_name, personnel, address } = data;
   let titleInput: any = createDomEvent('input', params.title, title, DomTipsView('标题'));
   let contextInput: any = createDomEvent('textarea', params.context, context, DomTipsView('内容'));
@@ -289,7 +287,7 @@ export const SetBaiXinData = (): DomDataType => {
     place: valList[2]?.value,
     unit: valList[3]?.value,
     price: valList[1].value,
-    situation: valList[4].value,
+    situation: valList[4] ? valList[4].value : undefined,
   };
 };
 export const AddESF58Tips = (data: any, params: any): DomParamsType => {
@@ -403,7 +401,10 @@ export const AddEsSjTips = (data: any, params: any): DomParamsType => {
   let titleInput = createDomEvent('input', params.title, title, DomTipsView('标题'));
   let contextInput = createDomEvent('textarea', params.context, context, DomTipsView('内容'));
   let str = params.price.match(/\d+/g);
-  let priceInput = createDomEvent('input', str[0], price, DomTipsView('价格'));
+  let priceInput = null;
+  if (str) {
+    priceInput = createDomEvent('input', str[0], price, DomTipsView('价格'));
+  }
   return {
     title: titleInput?.value,
     context: contextInput.textContent,
@@ -449,7 +450,7 @@ export const GetResultSheet: any = {
   'zu.anjuke.com/fangyuan/': () => SetZuFangData(),
   'baixing.com/zhengzu/': () => SetZuFangData(),
   'baixing.com/duanzu/': () => SetZuFangData(),
-  'anjuke.com/prop/': () => SetRsfData(),
+  'zu.anjuke.com/prop/': () => SetRsfData(),
   'baixing.com/ershoufang/': () => SetBaiXinData(),
   'che168.com/dealer/': () => SetEscData(),
   '58.com/ershoufang/': () => SetRsfData(),

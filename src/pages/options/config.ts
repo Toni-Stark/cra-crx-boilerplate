@@ -1,5 +1,5 @@
 // 菜单栏;
-import { LST } from '@/common/types';
+import { LST } from '@/pages/types';
 
 export let configList = [
   { title: '数据录入管理', keyValue: LST.DATA_MANAGER },

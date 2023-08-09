@@ -10,7 +10,15 @@
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["scripting", "activeTab", "storage"],
+  "permissions": [
+    "scripting",
+    "tabs",
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
   "chrome_url_overrides": {
     "newtab": "newtab.html"
   },

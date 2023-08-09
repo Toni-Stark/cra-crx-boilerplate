@@ -1,5 +1,5 @@
 import React, { useMemo, useLayoutEffect, useState } from 'react';
-import { LST } from '@/common/types';
+import { LST } from '@/pages/types';
 
 const getStorage = (key: string) => localStorage.getItem(key);
 const setStorage = (key: string, val: string) => localStorage.setItem(key, val);

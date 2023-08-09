@@ -1,6 +1,13 @@
 import { data_maps } from '@/assets/js/map';
 
-export const PathUrl = ['www.zhipin.com', 'jn.58.com', 'www.jd.com', 'www.taobao.com'];
+export const PathUrl = [
+  'www.zhipin.com',
+  'jn.58.com',
+  '58.com',
+  'www.jd.com',
+  'www.taobao.com',
+  'baixing.com',
+];
 
 // 常规网页验证
 const httpReg = '^/((http|https)://)?([a-zA-Z0-9]{0,5}).([a-zA-Z0-9])*(.com|.cn|/)/';
@@ -45,7 +52,6 @@ export const createPeopleNameList = () => {
 };
 
 export const getTranslateAddress = (str: string) => {
-  console.log(str);
   const getData = (obj: any) => {
     let arr = Object.keys(obj.c);
     let num = Math.floor(Math.random() * (arr.length - 0.1));
@@ -89,28 +95,29 @@ export const getTranslateAddress = (str: string) => {
     }
     return '镇' + po;
   };
-
   let data: any;
+  function getMapsIndex(list: any): any {
+    let arrIndex;
+    arrIndex = list[Math.floor(Math.random() * (list.length - 0.1))];
+    return data_maps[arrIndex];
+  }
   if (['四川', '成都'].includes(str)) {
-    data = data_maps[5101];
+    data = getMapsIndex([5101]);
   }
   if (['重庆'].includes(str)) {
-    data = data_maps[5001];
+    data = getMapsIndex([5001]);
   }
   if (['山东', '济南', '淄博', '青岛'].includes(str)) {
-    let list: any = [3701, 3702, 3703];
-    list = list[Math.floor(Math.random() * (list.length - 0.1))];
-    data = data_maps[list];
+    data = getMapsIndex([3701, 3702, 3703]);
   }
   if (['贵州', '贵阳', '遵义'].includes(str)) {
-    let list: any = [5201, 5203];
-    list = list[Math.floor(Math.random() * (list.length - 0.1))];
-    data = data_maps[list];
+    data = getMapsIndex([5201, 5203]);
   }
   if (['湖北', '武汉', '襄阳'].includes(str)) {
-    let list: any = [5201, 5203];
-    list = list[Math.floor(Math.random() * (list.length - 0.1))];
-    data = data_maps[list];
+    data = getMapsIndex([5201, 5203]);
+  }
+  if (['天津'].includes(str)) {
+    data = getMapsIndex([1201]);
   }
   let distinguish = getData(data);
   let county = getData(distinguish);
@@ -123,7 +130,7 @@ export function trimSpecial(str: string) {
   if (str !== '') {
     // const pattern =
     //     /[\.`~!@#$^\-&*()=|{}':;',\\\[\]<>\/?~！@#￥……&*（）——|{}【】'；：""'。，、？\s]/g;
-    const pattern = /[`~#$^&*()=|{};,\\[\]…【】；？\s]/g;
+    const pattern = /[`~#$^lt&ns*()=|{};,\\[\]bp<>/！…【】；？\s]/g;
     str = str.replace(pattern, '');
   }
   return str;

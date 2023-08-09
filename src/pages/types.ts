@@ -22,6 +22,8 @@ export type MessageEventType<T = any> = {
   data?: T;
   msg?: string;
   create?: string;
+  list?: any;
+  cate?: any;
 };
 
 export interface CreateElementType {
@@ -30,9 +32,15 @@ export interface CreateElementType {
   sty?: string;
   val?: string;
   txt?: string;
+  url?: string;
 }
 
 export type ElementType = Element | HTMLInputElement | null;
+
+export type IndexObj = {
+  x: number;
+  y: number;
+};
 
 export enum situationType {
   '东',

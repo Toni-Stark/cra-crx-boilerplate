@@ -8,7 +8,8 @@ import {
   queryEle,
   queryEleAll,
 } from '@/pages/content/tools';
-import { sitType, situationType, unitType } from '@/common/types';
+import { sitType, situationType, unitType } from '@/pages/types';
+import { EDI_CATE, EDI_STORE } from '@/common/agreement';
 
 export const PERMANENT: any = {
   title: '.is-required>.el-form-item__content>.el-input>.el-input__inner',
@@ -70,6 +71,7 @@ export const ALL_SHANG_PING: any = {
 export const SHANG_PING: any = {
   e_price: '#goodsBaseBody>tr>td:nth-child(3)>.form-control',
   user: '#tab1>.form-table>tbody>tr:nth-child(3)>td>.form-control',
+  users: '#tab1>.form-table>tbody>tr:nth-child(3)>td>.form-control>option',
   cate: '#tab1>.form-table>tbody>tr:nth-child(4)>td>.btn-primary',
   context: '.ck-editor__editable_inline',
 };
@@ -259,7 +261,6 @@ export const putDownICPData = (data: any) => {
   }, 100);
 };
 export const putDownEDIData = (data: any) => {
-  console.log(data, 'edi');
   for (let i in ALL_SHANG_PING) {
     if (data.hasOwnProperty(i)) {
       let formEle: any = queryEle(ALL_SHANG_PING[i]);
@@ -277,30 +278,64 @@ export const putDownEDIData = (data: any) => {
         formEle.value = ranNum;
         DispatchEvent(formEle, 'input');
       }
-      if (i === 'user') {
-        let selList: any = queryEle(SHANG_PING[i]);
-        let selItems: any = queryEleAll(SHANG_PING[i] + '>option');
-        selList.value = selItems[Math.floor(Math.random() * 5) + 1].value;
-      }
-      if (i === 'cate') {
-        let btn: any = queryEle(SHANG_PING[i]);
-        btn.click();
-        setTimeout(() => {
-          let num = Math.floor(Math.random() * 2) + 1;
-          let conDom: any = queryEle('.aui_state_full>iframe');
-          let domList = conDom?.contentDocument.querySelectorAll('#categoryBox>.select>li>label');
-          domList[num].click();
-          setTimeout(() => {
-            let confirm: any = queryEle('.aui_state_highlight');
-            confirm?.click();
-          }, 200);
-        }, 2000);
-      }
-      if (i === 'context') {
-        let richDom: any = queryEle('.ck-editor__editable_inline');
-        let newText = document.createTextNode(data[i]);
-        richDom.appendChild(newText);
-      }
+      // if (i === 'user') {
+      //   let selList: any = queryEle(SHANG_PING[i]);
+      //   let selItems: any = queryEleAll(SHANG_PING[i] + '>option');
+      //   selList.value = selItems[Math.floor(Math.random() * 5) + 1].value;
+      // }
+      // if (i === 'cate') {
+      //   let btn: any = queryEle(SHANG_PING[i]);
+      //   btn.click();
+      //   setTimeout(() => {
+      //     let num = Math.floor(Math.random() * 2) + 1;
+      //     let conDom: any = queryEle('.aui_state_full>iframe');
+      //     let domList = conDom?.contentDocument.querySelectorAll('#categoryBox>.select>li>label');
+      //     domList[num].click();
+      //     setTimeout(() => {
+      //       let confirm: any = queryEle('.aui_state_highlight');
+      //       confirm?.click();
+      //     }, 200);
+      //   }, 2000);
+      // }
+      // if (i === 'context') {
+      //   let richDom: any = queryEle('.ck-editor__editable_inline');
+      //   let Img = document.createElement('img');
+      //   Img.src =
+      //     'https://img.alicdn.com/imgextra/i1/4011321989/O1CN01dZTmDW1QZ0YIUq0wC_!!4011321989.jpg';
+      //   richDom.appendChild(Img);
+      // }
     }
   }
+};
+
+export const chooseEDICateData = (data: any) => {
+  if (data.msg === EDI_CATE) {
+    let formEle: any = queryEle(SHANG_PING['user']);
+    let formEls: any = queryEleAll(SHANG_PING['users']);
+    let arr = [];
+    for (let i = 0; i < formEls.length; i++) {
+      arr.push(formEls[i].value);
+    }
+    formEle.value = arr[data.key];
+  }
+  if (data.msg === EDI_STORE) {
+    let btn: any = queryEle(SHANG_PING['cate']);
+    btn.click();
+    setTimeout(() => {
+      let num = data.key;
+      let conDom: any = queryEle('.aui_state_full>iframe');
+      let domList = conDom?.contentDocument.querySelectorAll('#categoryBox>.select>li>label');
+      domList[num].click();
+      setTimeout(() => {
+        let confirm: any = queryEle('.aui_state_highlight');
+        confirm?.click();
+      }, 1000);
+    }, 2000);
+  }
+};
+
+export const chooseImgServices = () => {
+  let upDom = document.querySelector('.el-upload--text');
+  let e = new Event('click');
+  upDom?.dispatchEvent(e);
 };

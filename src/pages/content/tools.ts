@@ -1,6 +1,5 @@
 // 重置querySelectorAPI
-
-import { CreateElementType, ElementType } from '@/common/types';
+import { CreateElementType, ElementType } from '@/pages/types';
 
 export const queryEle = (str: string): ElementType => {
   return document.querySelector(str);
@@ -11,7 +10,7 @@ export const queryEleAll = (str: string): NodeListOf<Element> => {
 };
 
 // 创建dom元素
-export const createDom = ({ tag, cla, sty, val, txt }: CreateElementType): Element => {
+export const createDom = ({ tag, cla, sty, val, txt, url }: CreateElementType): Element => {
   let dom: any = document.createElement(tag);
   try {
     if (cla) {
@@ -25,6 +24,9 @@ export const createDom = ({ tag, cla, sty, val, txt }: CreateElementType): Eleme
     }
     if (txt) {
       dom.textContent = txt;
+    }
+    if (url) {
+      dom.src = url;
     }
   } catch (err) {
     console.log(err, 'err');

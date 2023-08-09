@@ -4,6 +4,7 @@ export const settingStorage = (
 ) => {
   chrome.storage.sync.set(params, callback);
 };
+
 export const gettingStorage = (key: string, callback: (res: any) => any | void) => {
   chrome.storage.sync.get(key, callback);
 };

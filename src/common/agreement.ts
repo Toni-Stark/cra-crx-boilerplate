@@ -26,3 +26,16 @@ export const CREATE_SERVER_TEMPLATE = 'create_server_template';
 export const PUT_DOWN_ICP_DATA = 'put_down_icp_data';
 // 填入edi数据
 export const PUT_DOWN_EDI_DATA = 'put_down_edi_data';
+// 唤起edi数据分类
+export const ASK_CATE_TO_SERVICES = 'ask_cate_to_services';
+// 唤起edi商户选择
+export const EDI_STORE = 'edi_store';
+// 唤起edi数据分类
+export const EDI_CATE = 'edi_cate';
+
+// 截图快捷键
+export const SCREENSHOT_SHORTCUT = 'screenshot_shortcut';
+// 唤醒中台选择
+export const WAKE_FILE_SELECTION = 'wake_file_selection';
+// 上传选中图片
+export const UPLOAD_IMG_FILES = 'upload_img_files';
