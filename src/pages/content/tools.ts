@@ -1,6 +1,8 @@
 // 重置querySelectorAPI
 import { CreateElementType, ElementType } from '@/pages/types';
 
+export const ImageMime = 'image/png';
+
 export const queryEle = (str: string): ElementType => {
   return document.querySelector(str);
 };
@@ -138,4 +140,17 @@ export const getPriceRandom = (title: any, context: any, val?: any) => {
 export const noStr = (str: any) => {
   let reg = /[\d.]+/;
   return str ? str.match(reg)[0] : '';
+};
+
+export const BaseToBlob = (tmp_base64: string) => {
+  var arr = tmp_base64.split(','),
+    bstr = atob(arr[1]),
+    n = bstr.length,
+    u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  var blob = new Blob([u8arr], { type: ImageMime });
+  var file = new File([u8arr], 'capture', { type: ImageMime });
+  return blob;
 };

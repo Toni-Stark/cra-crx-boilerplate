@@ -1,6 +1,6 @@
 import { IndexObj } from '@/pages/types';
 import { sendFilesForServices, sendMessageScreenIndex } from '@/pages/content/messageStore';
-import { queryEle } from '@/pages/content/tools';
+import { BaseToBlob, queryEle } from '@/pages/content/tools';
 let drawFiles: any = null;
 
 export const createCanvasScreen = (files: any) => {
@@ -129,21 +129,35 @@ const AddUploadImage = (e: { imageUrl: any }) => {
   imgView?.remove();
   imgView = document.createElement('div');
   imgView.className = 'UploadImg';
-  let imgFiles: any = createDom('img', 'UploadImgText');
-  imgFiles.src = e.imageUrl;
-  imgView.appendChild(imgFiles);
+  // let imgFiles: any = createDom('img', 'UploadImgText');
+  // imgFiles.src = e.imageUrl;
+  // imgView.appendChild(imgFiles);
+  imgView.style.backgroundImage = 'url(' + e.imageUrl + ')';
+  imgView.addEventListener('mousedown', (e: any) => {
+    document.oncontextmenu = function () {
+      return false;
+    };
+    if (e.button === 2) {
+      imgView.removeEventListener('mousedown', () => {});
+      DelUploadImage();
+      return;
+    }
+  });
   document.body.appendChild(imgView);
+};
+const DelUploadImage = () => {
+  let imgView: any = queryEle('.UploadImg');
+  imgView?.remove();
 };
 
 // 获取截图
 function getBaseAndUpload(s: IndexObj, e: IndexObj) {
   if (!drawFiles) return;
-  // downLoadImg(s, e);
-
-  sendFilesForServices(drawFiles, (e) => {
-    AddUploadImage(e);
-    clearEveryLis();
-  });
+  downLoadImg(s, e);
+  // sendFilesForServices(drawFiles, (e) => {
+  //   AddUploadImage(e);
+  //   clearEveryLis();
+  // });
 }
 
 // 下载图片
@@ -173,11 +187,20 @@ const downLoadImg = (s: IndexObj, e: IndexObj) => {
       e.x - s.x,
       e.y - s.y
     );
-    downLoadUrl(canvas2.toDataURL(), new Date().getTime() + '.png');
+    // downLoadUrl(canvas2.toDataURL(), new Date().getTime() + '.png');
+    downLoadUrl(cth, new Date().getTime() + '.png');
   };
 };
 
 const downLoadUrl = (url: any, name: string) => {
+  console.log(url, '图片');
+  let blob: any = BaseToBlob(url);
+  sendFilesForServices(url, blob, (e) => {
+    AddUploadImage(e);
+    clearEveryLis();
+  });
+  return;
+  // 下载到本地
   let saveLink = document.createElement('a');
   saveLink.style.display = 'none';
   saveLink.href = url;

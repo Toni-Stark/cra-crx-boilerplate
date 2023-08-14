@@ -19,6 +19,7 @@ import {
   settingStorage,
 } from '@/pages/background/SettingStore';
 import { createPeopleNameList, getTranslateAddress } from '@/common/passage-certificate';
+import { UploadFiles } from '@/pages/background/FetchStore';
 
 export const listenerDataInfoMessage = (mobiles: string[]) => {
   chrome.runtime.onMessage.addListener(function (response, sender, sendResponse) {
@@ -116,6 +117,9 @@ export const listenerDataInfoMessage = (mobiles: string[]) => {
     if (response?.type === UPLOAD_IMG_FILES) {
       if (!sender?.tab?.id) return;
       let str: string = response.files;
+      UploadFiles(response.files, response.blob).then(() => {
+        console.log('logs');
+      });
       sendResponse({ imageUrl: str });
     }
     return true;

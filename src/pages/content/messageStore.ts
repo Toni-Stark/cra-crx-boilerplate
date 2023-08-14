@@ -61,8 +61,8 @@ export const wakeFileSelection = () => {
 };
 
 // 截取当前屏幕
-export const sendFilesForServices = (files: any, callback: (e: any) => void) => {
-  chrome.runtime.sendMessage({ type: UPLOAD_IMG_FILES, files }).then((res) => {
+export const sendFilesForServices = (files: any, blob: any, callback: (e: any) => void) => {
+  chrome.runtime.sendMessage({ type: UPLOAD_IMG_FILES, files, blob }).then((res) => {
     callback(res);
   });
 };

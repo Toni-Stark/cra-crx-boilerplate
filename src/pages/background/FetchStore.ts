@@ -1,3 +1,16 @@
+// addEventListener('fetch', (event: any) => {
+//   event.respondWith(handleRequest(event.request));
+// });
+//
+// export const handleRequest = async (request: any) => {
+//   const cookieRequest = new Request(request, {
+//     headers: {
+//       Cookie: 'PHPSESSID=r8m3m03qh28sfhf14dcomna1lv; sidebarStatus=1',
+//     },
+//   });
+//   return await fetch(cookieRequest);
+// };
+
 export const FetchApi = ({ url, method, data, type }: FetchType) => {
   return new Promise((resolve, reject) => {
     let contentType = 'application/json';
@@ -12,7 +25,7 @@ export const FetchApi = ({ url, method, data, type }: FetchType) => {
       },
       body: JSON.stringify(data),
     };
-    fetch(link, option).then((res) => {
+    fetch(url, option).then((res) => {
       switch (res.status) {
         case 200:
           res.text().then((result: any) => {
@@ -29,6 +42,31 @@ export const FetchApi = ({ url, method, data, type }: FetchType) => {
       }
     });
   });
+};
+
+export const UploadFiles = async (files: any, blob: any) => {
+  // multipart/form-data
+  // application/x-www-form-urlencoded
+  console.log(blob);
+  let formData = new FormData();
+  formData.append('file', blob, 'img.png');
+  fetch('http://www.scicp15.com/files/api/upload/module/index/file/file/field/thumb/cid/72', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'multipart/form-data;',
+    },
+    body: formData,
+    credentials: 'include',
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      // 处理上传成功后的响应
+      console.log('上传成功:', data);
+    })
+    .catch((error) => {
+      // 处理上传失败的情况
+      console.error('上传失败:', error);
+    });
 };
 
 export const PostAPI = async (params: FetchType) => {
