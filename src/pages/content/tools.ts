@@ -36,6 +36,11 @@ export const createDom = ({ tag, cla, sty, val, txt, url }: CreateElementType): 
   return dom;
 };
 
+// 创建一段上下文
+export const createTextNode = (text: string) => {
+  return document.createTextNode(text);
+};
+
 export const getRegRandom = (title: any, context: any) => {
   let reg = /[0-9一二三四五两](室|(居室)|房)/;
   let tVal = title?.match(reg);
@@ -143,14 +148,22 @@ export const noStr = (str: any) => {
 };
 
 export const BaseToBlob = (tmp_base64: string) => {
-  var arr = tmp_base64.split(','),
+  if (!tmp_base64) return;
+  var arr: any = tmp_base64.split(','),
+    mime = arr[0].match(/:(.*?);/)[1],
     bstr = atob(arr[1]),
     n = bstr.length,
     u8arr = new Uint8Array(n);
   while (n--) {
     u8arr[n] = bstr.charCodeAt(n);
   }
-  var blob = new Blob([u8arr], { type: ImageMime });
-  var file = new File([u8arr], 'capture', { type: ImageMime });
-  return blob;
+  return new Blob([u8arr], { type: mime }); //返回blob对象
+};
+export const isJSONString = (str: string) => {
+  try {
+    JSON.parse(str);
+    return JSON.parse(str);
+  } catch (error) {
+    return false;
+  }
 };

@@ -81,6 +81,25 @@ export const DispatchEvent = (dom: any, event: string) => {
   dom?.dispatchEvent(e);
 };
 
+export const handDownICPData = (data: any, callback: any) => {
+  for (let i in PERMANENT) {
+    if (data.hasOwnProperty(i)) {
+      let formEle: any = queryEle(PERMANENT[i]);
+      if (i === 'context') {
+        formEle.value = trimSpecial(data[i]);
+      } else {
+        if (formEle) {
+          formEle.value = data[i];
+        }
+      }
+      DispatchEvent(formEle, 'input');
+    }
+  }
+  let btn: any = queryEle('.app-container .container .el-row .el-button--primary');
+  btn?.click();
+  callback();
+};
+
 export const putDownICPData = (data: any) => {
   for (let i in PERMANENT) {
     if (data.hasOwnProperty(i)) {
@@ -273,10 +292,15 @@ export const putDownEDIData = (data: any) => {
   if (data.cate === 'SHANG_PING') {
     for (let i in SHANG_PING) {
       if (i === 'e_price') {
-        let ranNum: any = Math.ceil(Math.random() * 50) + Number(data.price);
+        let ranNum: any = data?.e_price
+          ? Math.ceil(Math.random() * 150) + data?.e_price
+          : Math.ceil(Math.random() * 150);
         let formEle: any = queryEle(SHANG_PING[i]);
         formEle.value = ranNum;
         DispatchEvent(formEle, 'input');
+        let formEleEval: any = queryEle('#goodsBaseBody>tr>td:nth-child(4)>.input-sm');
+        formEleEval.value = ranNum + 50;
+        DispatchEvent(formEleEval, 'input');
       }
       // if (i === 'user') {
       //   let selList: any = queryEle(SHANG_PING[i]);
@@ -338,4 +362,23 @@ export const chooseImgServices = () => {
   let upDom = document.querySelector('.el-upload--text');
   let e = new Event('click');
   upDom?.dispatchEvent(e);
+};
+
+export const currentHandEditDetail = (data: any, callback: any) => {
+  document.location.hash = '/index/infoEdit?cid=' + data.cid + '&id=' + data.id;
+  if (document.readyState === 'complete') {
+    let params: any = {};
+    if (data?.address) {
+      params['address'] = data.address;
+    }
+    if (data?.phone && data?.personnel) {
+      params['phone'] = data.phone;
+      params['personnel'] = data.personnel;
+    }
+
+    handDownICPData(params, () => {
+      console.log('加载动作');
+      callback({ idx: data.idx + 1, hand: data.hand });
+    });
+  }
 };

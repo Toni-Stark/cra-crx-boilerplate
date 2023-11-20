@@ -8,6 +8,7 @@ import {
   UPLOAD_IMG_FILES,
   WAKE_FILE_SELECTION,
 } from '@/common/agreement';
+import { InfoType } from '@/pages/types';
 
 export const copyInfoToServices = (info: any) => {
   chrome.runtime.sendMessage({ ...info, type: COPY_INFO_TO_SERVICES }).then((res) => {
@@ -64,5 +65,14 @@ export const wakeFileSelection = () => {
 export const sendFilesForServices = (files: any, blob: any, callback: (e: any) => void) => {
   chrome.runtime.sendMessage({ type: UPLOAD_IMG_FILES, files, blob }).then((res) => {
     callback(res);
+  });
+};
+
+// 修改当前数据的地址
+export const changeInfoServices = (type: string, params?: Partial<InfoType>) => {
+  chrome.runtime.sendMessage({ type, params }).then((res) => {
+    console.log('info-res------------------>');
+    console.log(res);
+    console.log('info-res------------------>');
   });
 };

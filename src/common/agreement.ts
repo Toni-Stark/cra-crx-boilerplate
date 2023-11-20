@@ -39,3 +39,12 @@ export const SCREENSHOT_SHORTCUT = 'screenshot_shortcut';
 export const WAKE_FILE_SELECTION = 'wake_file_selection';
 // 上传选中图片
 export const UPLOAD_IMG_FILES = 'upload_img_files';
+
+// 修改当前数据的地址
+export const CHANGE_PLACE_SERVICES = 'change_place_services';
+// 修改当前数据的联系人
+export const CHANGE_INFO_SERVICES = 'change_info_services';
+// 快捷修改列表数据
+export const CHANGE_ONE_PASS_SERVICES = 'change_one_pass_services';
+// 修改列表数据ACTIVITY
+export const OPEN_DETAIL_EDIT_ACTIVITY = 'open_detail_edit_activity';

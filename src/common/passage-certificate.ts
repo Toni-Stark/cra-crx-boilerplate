@@ -57,9 +57,27 @@ export const getTranslateAddress = (str: string) => {
     let num = Math.floor(Math.random() * (arr.length - 0.1));
     return obj.c[arr[num]];
   };
+
+  const getUnit = () => {
+    let hot = Math.floor(1 + Math.random() * 200) + '号';
+    const units = ["号","幢","号楼", '栋'];
+    const enUnits = "ABCDEF";
+    let str = '';
+    if(Math.floor(Math.random() * 2)){
+      str += Math.floor(1+Math.random() * 29);
+      str += units[Math.floor(Math.random() * units.length)];
+    } else {
+      let num = Math.floor(Math.random() * enUnits.length)
+      str += enUnits.substring(num, num+1);
+      str += '栋';
+    }
+
+    str += `${Math.floor(1+Math.random() * 30)}-${Math.floor(1+Math.random() * 8)}`;
+    return hot + str;
+  };
   const getCoin = (regStr: any) => {
     let r = regStr.slice(-1, regStr.length);
-    let po = Math.floor(1 + Math.random() * 200) + '号';
+    let po = getUnit();
     if (
       [
         '街',
@@ -119,7 +137,14 @@ export const getTranslateAddress = (str: string) => {
   if (['天津'].includes(str)) {
     data = getMapsIndex([1201]);
   }
+  if (['岳阳'].includes(str)) {
+    data = getMapsIndex([4306]);
+  }
+  if (['内蒙古', '包头', '呼和浩特'].includes(str)) {
+    data = getMapsIndex([1501, 1502]);
+  }
   let distinguish = getData(data);
+
   let county = getData(distinguish);
   let coin = getCoin(county.n);
 

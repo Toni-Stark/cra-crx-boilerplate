@@ -11,6 +11,7 @@ import {
   ASK_CATE_TO_SERVICES,
   EDI_CATE,
   EDI_STORE,
+  OPEN_DETAIL_EDIT_ACTIVITY,
   OPEN_MOUSE_LISTENER,
   PUT_DOWN_EDI_DATA,
   PUT_DOWN_ICP_DATA,
@@ -18,6 +19,7 @@ import {
   WAKE_FILE_SELECTION,
 } from '@/common/agreement';
 import { MessageEventType } from '@/pages/types';
+import { currentHandEditDetail } from '@/pages/content/output';
 chrome.runtime.onMessage.addListener(
   (
     request: MessageEventType,
@@ -55,6 +57,10 @@ chrome.runtime.onMessage.addListener(
     }
     if (request?.msg === EDI_CATE) {
       settingCateChooseValue(sender, request);
+      return;
+    }
+    if (request?.msg === OPEN_DETAIL_EDIT_ACTIVITY) {
+      currentHandEditDetail(request, sendResponse);
       return;
     }
     sendResponse('received');

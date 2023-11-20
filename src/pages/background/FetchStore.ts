@@ -12,7 +12,7 @@
 // };
 
 export const FetchApi = ({ url, method, data, type }: FetchType) => {
-  return new Promise((resolve, reject) => {
+  return new Promise((resolve) => {
     let contentType = 'application/json';
     if (type === 'form') {
       contentType = 'application/x-www-form-urlencoded';
@@ -45,15 +45,16 @@ export const FetchApi = ({ url, method, data, type }: FetchType) => {
 };
 
 export const UploadFiles = async (files: any, blob: any) => {
+  console.log(blob, 'logs');
   // multipart/form-data
   // application/x-www-form-urlencoded
-  console.log(blob);
+  // multipart/form-data
   let formData = new FormData();
-  formData.append('file', blob, 'img.png');
+  formData.append('file', blob);
   fetch('http://www.scicp15.com/files/api/upload/module/index/file/file/field/thumb/cid/72', {
     method: 'POST',
     headers: {
-      'Content-Type': 'multipart/form-data;',
+      'Content-Type': 'application/x-www-form-urlencoded',
     },
     body: formData,
     credentials: 'include',

@@ -12,3 +12,7 @@ export const gettingStorage = (key: string, callback: (res: any) => any | void) 
 export const sendMessageQueryCurrent = (tab: number, message: any) => {
   chrome.tabs.sendMessage(tab, message);
 };
+
+export const sendMessageCallback = (tab: number, message: any, callback: any) => {
+  chrome.tabs.sendMessage(tab, message, callback);
+};

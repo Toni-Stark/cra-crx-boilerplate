@@ -2,6 +2,7 @@ import { DomDataSheet, getHostDataParams } from '../config';
 import { stylesContextTwo } from '@/pages/content/component/styleSheet';
 import {
   AskServicesEdiTYPE,
+  changeInfoServices,
   copyInfoToServices,
   sendMessageScreenIndex,
   sendMessageSetIndex,
@@ -14,8 +15,17 @@ import {
   putDownEDIData,
   putDownICPData,
 } from '@/pages/content/output';
-import { createDom, queryEle, queryEleAll } from '@/pages/content/tools';
-import { COPY_INFO_TO_SERVICES, EDI, EDI_CATE, EDI_STORE, ICP } from '@/common/agreement';
+import { createDom, createTextNode, queryEle, queryEleAll } from '@/pages/content/tools';
+import {
+  CHANGE_INFO_SERVICES,
+  CHANGE_ONE_PASS_SERVICES,
+  CHANGE_PLACE_SERVICES,
+  COPY_INFO_TO_SERVICES,
+  EDI,
+  EDI_CATE,
+  EDI_STORE,
+  ICP,
+} from '@/common/agreement';
 import { createCanvasScreen, createStartScreenBtn } from '@/pages/content/pictureScreen';
 
 // 设置css;
@@ -70,6 +80,7 @@ export const createContentView = () => {
   floatView = createDom({ tag: 'div', cla: 'floatView' });
   dom.appendChild(floatView);
   CreateDataModal();
+  CreateConfigModal();
   settingServerIndex(ICP);
   settingServerIndex(EDI);
   AskServicesEdiTYPE();
@@ -105,7 +116,6 @@ const createDataInfo = () => {
   let params: any = getHostDataParams(document.location);
   copyInfoToServices(params);
 };
-
 const settingICPConfig = (key: any) => {
   let selectDom: any = queryEle('.el-cascader>.el-cascader__label');
   selectDom?.click();
@@ -150,6 +160,59 @@ const settingEDICateList = (key: any) => {
     };
     sendMessageSetIndex({ key, type: EDI, listData });
   }, 2500);
+};
+
+const CreateConfigModal = () => {
+  let dom: any = queryEle('body');
+  let placeView = queryEle('.placeView');
+  if (placeView) placeView.remove();
+  placeView = createDom({ tag: 'div', cla: 'placeView', txt: '刷新地址' });
+  dom.appendChild(placeView);
+  placeView.addEventListener('click', () => {
+    changeInfoServices(CHANGE_PLACE_SERVICES);
+  });
+  let infoView = queryEle('.infoView');
+  if (infoView) infoView.remove();
+  infoView = createDom({ tag: 'div', cla: 'infoView', txt: '刷新联系人' });
+  dom.appendChild(infoView);
+  infoView.addEventListener('click', () => {
+    changeInfoServices(CHANGE_INFO_SERVICES);
+  });
+  let choseView = queryEle('.choseView');
+  if (choseView) choseView.remove();
+  choseView = createDom({ tag: 'form', cla: 'choseView' });
+  let LabV = createDom({ tag: 'div', cla: 'LabV' });
+  let labelC = createRadioBtn({ text: '联系人', key: 'contacts' });
+  let labelA = createRadioBtn({ text: '地址', key: 'area' });
+  let openBtn = createDom({ tag: 'div', cla: 'openBtn', txt: '开始' });
+  let inputO: any = createDom({ tag: 'textarea', cla: 'jsonI' });
+  inputO.name = 'json';
+  LabV.appendChild(labelC);
+  LabV.appendChild(labelA);
+  choseView.appendChild(inputO);
+  choseView.appendChild(LabV);
+  choseView.appendChild(openBtn);
+  dom.appendChild(choseView);
+  openBtn.addEventListener('click', () => {
+    let form: any = queryEle('.choseView');
+    let params = {
+      contacts: form['contacts'].checked,
+      area: form['area'].checked,
+      json: form['json'].value,
+      url: document.location.origin,
+    };
+    changeInfoServices(CHANGE_ONE_PASS_SERVICES, params);
+  });
+};
+const createRadioBtn = ({ text, key }: { text: string; key: string }) => {
+  let label = createDom({ tag: 'label' });
+  let check: any = createDom({ tag: 'input' });
+  check.type = 'checkbox';
+  check.name = key;
+  let nodeText = createTextNode(text);
+  label.appendChild(check);
+  label.appendChild(nodeText);
+  return label;
 };
 
 const settingEDIConfig = (key: any) => {
@@ -197,11 +260,6 @@ const settingServerIndex = (msg: string) => {
   });
   Index?.appendChild(CateList);
   dom?.appendChild(Index);
-};
-
-export const delModal = () => {
-  // let floatView = queryEle('.floatView');
-  // if (floatView) floatView.remove();
 };
 
 export const addMessageModal = () => {
@@ -289,6 +347,7 @@ export const settingCateChooseValue = (
   sender: chrome.runtime.MessageSender,
   request: MessageEventType<any>
 ) => {
+  console.log('content是否接到信息', sender, request);
   chooseEDICateData(request);
 };
 

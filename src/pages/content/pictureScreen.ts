@@ -149,11 +149,11 @@ const DelUploadImage = () => {
   let imgView: any = queryEle('.UploadImg');
   imgView?.remove();
 };
-
 // 获取截图
 function getBaseAndUpload(s: IndexObj, e: IndexObj) {
   if (!drawFiles) return;
   downLoadImg(s, e);
+
   // sendFilesForServices(drawFiles, (e) => {
   //   AddUploadImage(e);
   //   clearEveryLis();
@@ -187,13 +187,12 @@ const downLoadImg = (s: IndexObj, e: IndexObj) => {
       e.x - s.x,
       e.y - s.y
     );
-    // downLoadUrl(canvas2.toDataURL(), new Date().getTime() + '.png');
-    downLoadUrl(cth, new Date().getTime() + '.png');
+    downLoadUrl(canvas2.toDataURL(), new Date().getTime() + '.png');
+    // downLoadUrl(cth, new Date().getTime() + '.png');
   };
 };
 
 const downLoadUrl = (url: any, name: string) => {
-  console.log(url, '图片');
   let blob: any = BaseToBlob(url);
   sendFilesForServices(url, blob, (e) => {
     AddUploadImage(e);

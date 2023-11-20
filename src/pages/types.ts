@@ -67,3 +67,10 @@ export enum sitType {
   '精装修' = 3,
   '豪华',
 }
+
+export type InfoType = {
+  area: boolean;
+  contacts: boolean;
+  json: string;
+  url: string;
+};
