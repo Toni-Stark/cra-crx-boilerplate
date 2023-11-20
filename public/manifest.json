@@ -15,6 +15,7 @@
     "tabs",
     "storage",
     "activeTab",
+    "webRequest",
     "declarativeNetRequest",
     "declarativeNetRequestWithHostAccess",
     "declarativeNetRequestFeedback"

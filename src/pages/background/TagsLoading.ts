@@ -1,18 +1,21 @@
-import { OPEN_MOUSE_LISTENER } from '@/common/agreement';
-let tabList: any = {};
+import { SETTING_LIST_DATA } from '@/common/agreement';
 let tabTimer: any = {};
 export const listenerTagLoadingMessage = () => {
   chrome.tabs.onUpdated.addListener(function (tabId, info, tab) {
-    if (!tabList[tabId]) {
-      tabList[tabId] = [tab.url];
-    } else {
-      if (tabList[tabId][tabList[tabId].length - 1] !== tab.url) tabList[tabId].push(tab.url);
-    }
     if (tab.status !== 'complete') return;
+    if (tab?.url && tab.url.indexOf('corp-query-search') < 0) return;
     tabTimer[tabId] = setTimeout(() => {
       clearTimeout(tabTimer[tabId]);
       tabTimer[tabId] = null;
-      chrome.tabs.sendMessage(tabId, { msg: OPEN_MOUSE_LISTENER });
+      chrome.tabs.sendMessage(tabId, { msg: SETTING_LIST_DATA });
     }, 1000);
   });
+  chrome.webRequest.onCompleted.addListener(
+    (detail) => {
+      if (detail.url.indexOf('corp-query-search') >= 0) {
+        chrome.tabs.sendMessage(detail.tabId, { msg: SETTING_LIST_DATA });
+      }
+    },
+    { urls: ['<all_urls>'] }
+  );
 };

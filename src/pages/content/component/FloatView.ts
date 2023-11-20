@@ -1,8 +1,6 @@
-import { DomDataSheet, getHostDataParams } from '../config';
+import { DomDataSheet } from '../config';
 import { stylesContextTwo } from '@/pages/content/component/styleSheet';
 import {
-  AskServicesEdiTYPE,
-  copyInfoToServices,
   sendMessageScreenIndex,
   sendMessageSetIndex,
   sendMessageStoreIndex,
@@ -36,17 +34,7 @@ export const RegUrlConfig = (local: any) => {
   let regVal = local.pathname.match(reg);
   let path = local.host + (regVal ? regVal[0] : '');
   let list = [
-    '58',
-    '5i5j',
-    'zu.anjuke',
-    'anjuke',
-    'baixing',
-    'zhipin',
-    'che168',
-    'ichong123',
-    'ziroom',
-    'taobao',
-    'tmall',
+    'gsxt.gov.cn',
   ];
   let res: number = 0;
   list.find((item) => {
@@ -62,22 +50,9 @@ export const RegUrlConfig = (local: any) => {
 
 export const createContentView = () => {
   createContentStyle(stylesContextTwo);
-  let dom: any = queryEle('body');
-  let floatView = queryEle('.floatModal');
-  let modalView = queryEle('.floatView');
-  if (floatView) floatView.remove();
-  if (modalView) modalView.remove();
-  floatView = createDom({ tag: 'div', cla: 'floatView' });
-  dom.appendChild(floatView);
-  CreateDataModal();
-  settingServerIndex(ICP);
-  settingServerIndex(EDI);
-  AskServicesEdiTYPE();
-
   if (DomDataSheet.hasOwnProperty(RegUrlConfig(document.location))) {
     DomDataSheet[RegUrlConfig(document.location)]();
   }
-  StartScreenFlash();
 };
 
 // const CreateEDIModal = () => {
@@ -90,21 +65,6 @@ export const createContentView = () => {
 //     createICPInfo();
 //   });
 // };
-const CreateDataModal = () => {
-  let floatView = queryEle('.floatView');
-  let ReviewModal: any = queryEle('.floatView>.ReviewModal');
-  ReviewModal?.remove();
-  ReviewModal = createDom({ tag: 'div', cla: 'ReviewModal', txt: '收集' });
-  floatView?.appendChild(ReviewModal);
-  ReviewModal.addEventListener('click', () => {
-    createDataInfo();
-  });
-};
-
-const createDataInfo = () => {
-  let params: any = getHostDataParams(document.location);
-  copyInfoToServices(params);
-};
 
 const settingICPConfig = (key: any) => {
   let selectDom: any = queryEle('.el-cascader>.el-cascader__label');

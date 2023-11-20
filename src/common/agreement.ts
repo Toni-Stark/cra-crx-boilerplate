@@ -39,3 +39,6 @@ export const SCREENSHOT_SHORTCUT = 'screenshot_shortcut';
 export const WAKE_FILE_SELECTION = 'wake_file_selection';
 // 上传选中图片
 export const UPLOAD_IMG_FILES = 'upload_img_files';
+
+// 设置列表数据顺序
+export const SETTING_LIST_DATA = 'setting_list_data';

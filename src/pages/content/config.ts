@@ -1,5 +1,4 @@
-import { noStr, queryEle } from '@/pages/content/tools';
-import { RegUrlConfig } from '@/pages/content/component/FloatView';
+import { noStr, queryEle, queryEleAll } from '@/pages/content/tools';
 
 export const Boss = {
   title: '.job-banner>.inner>.job-primary>.info-primary>.name>h1',
@@ -412,70 +411,56 @@ export const AddEsSjTips = (data: any, params: any): DomParamsType => {
   };
 };
 
+const getLevel = (item: any) => {
+  let text = item.querySelector('.wrap-corpStatus').textContent;
+  if (text.indexOf('存续') >= 0) return 1;
+  if (text.indexOf('在营') >= 0) return 2;
+  if (text.indexOf('未注销') >= 0) return 3;
+  if (text.indexOf('注销') >= 0) return 4;
+  return 5;
+};
+
+const addListener = () => {
+  let linkList: any = queryEleAll('#pageForm>a');
+  for (let item of linkList) {
+    item?.removeEventListener();
+    item.addEventListener('click', () => {
+      console.log(123123123, item);
+      contextView();
+    });
+  }
+};
+
+let timer: any = undefined;
+const contextView = () => {
+  clearTimeout(timer);
+  timer = undefined;
+  timer = setTimeout(() => {
+    let advList = queryEle('#advs>.main-layout>div:nth-child(2)');
+    let advItems: any = queryEleAll('#advs>.main-layout>div:nth-child(2)>.search_list_item');
+    let arr = [];
+    for (let val of advItems) {
+      arr.push(val);
+    }
+    let list = arr.sort((a: any, b: any) => {
+      return getLevel(a) - getLevel(b);
+    });
+    while (advList?.firstChild) {
+      advList?.removeChild(advList?.firstChild);
+    }
+    for (let item of list) {
+      advList?.appendChild(item);
+    }
+  }, 5000);
+};
+
+const currentViewData = () => {
+  contextView();
+  // addListener();
+};
+
 export const DomDataSheet: any = {
-  'zhipin.com/job_detail/': () => GetBossData(Boss),
-  '58.com/zufang/': () => GetChuZuData(CZ58),
-  '58.com/hezu/': () => GetChuZuData(CZ58),
-  'zu.anjuke.com/fangyuan/': () => GetChuZuData(ZU_AN_JU_KE),
-  'baixing.com/zhengzu/': () => GetChuZuData(BAI_XIN_ZU),
-  'baixing.com/duanzu/': () => GetChuZuData(BAI_XIN_ZU),
-  'anjuke.com/prop/': () => GetEsfData(AN_JU_KE_FANG),
-  'baixing.com/ershoufang/': () => GetEsfData(BAI_XIN_FANG),
-  'che168.com/dealer/': () => GetErShouCheData(CHE168),
-  '58.com/ershoufang/': () => GetEsfData(ESF58),
-  '5i5j.com/ershoufang/': () => GetEsfData(ESF5I),
-  'baixing.com/ershouqiche/': () => GetBaiXinCheData(ESC_BAI_XIN),
-  '58.com/ershouche/': () => GetErShouCheData(ESC58),
-  '58.com/shouji/': () => GetEsSjData(ES_SJ58),
-  'baixing.com/shouji/': () => GetEsSjData(ES_SJ_BAI_XIN),
-  '58.com/diannao/': () => GetEsSjData(ES_SJ58),
-  '58.com/bijibendiannao/': () => GetEsSjData(ES_SJ58),
-  'baixing.com/bijiben/': () => GetEsSjData(ES_SJ_BAI_XIN),
-  'baixing.com/chongwujiaoyi/': () => GetEsSjData(ES_SJ_BAI_XIN),
-  'baixing.com/chongwumao/': () => GetEsSjData(ES_SJ_BAI_XIN),
-  '58.com/cat/': () => GetEsSjData(CAT_ES58),
-  '58.com/dog/': () => GetEsSjData(DOG_ES58),
-  'ichong123.com/p/': () => GetEsSjData(HOT_ES58),
-  '58.com/danche/': () => GetEsSjData(ES_SJ58),
-  'ziroom.com/x/': () => GetChuZuData(ROOM_X),
-  'www.jd.com': () => undefined,
-  'taobao.com': () => GetEDIData(TAO_BAO),
-  'tmall.com': () => GetEDIData(TIAN_MAO),
-};
-
-export const GetResultSheet: any = {
-  'zhipin.com/job_detail/': () => SetBossData(),
-  '58.com/zufang/': () => SetZuFangData(),
-  '58.com/hezu/': () => SetZuFangData(),
-  'zu.anjuke.com/fangyuan/': () => SetZuFangData(),
-  'baixing.com/zhengzu/': () => SetZuFangData(),
-  'baixing.com/duanzu/': () => SetZuFangData(),
-  'zu.anjuke.com/prop/': () => SetRsfData(),
-  'baixing.com/ershoufang/': () => SetBaiXinData(),
-  'che168.com/dealer/': () => SetEscData(),
-  '58.com/ershoufang/': () => SetRsfData(),
-  '5i5j.com/ershoufang/': () => SetRsfData(),
-  'baixing.com/ershouqiche/': () => SetBaiXinCheData(),
-  '58.com/ershouche/': () => SetEscData(),
-  '58.com/shouji/': () => SetEsSjData(),
-  'baixing.com/shouji/': () => SetEsSjData(),
-  '58.com/diannao/': () => SetEsSjData(),
-  '58.com/bijibendiannao/': () => SetEsSjData(),
-  'baixing.com/bijiben/': () => SetEsSjData(),
-  'baixing.com/chongwujiaoyi/': () => SetEsSjData(),
-  'baixing.com/chongwumao/': () => SetEsSjData(),
-  '58.com/cat/': () => SetEsSjData(),
-  '58.com/dog/': () => SetEsSjData(),
-  'ichong123.com/p/': () => SetEsSjData(),
-  '58.com/danche/': () => SetEsSjData(),
-  'ziroom.com/x/': () => SetZuFangData(),
-  'www.jd.com': () => undefined,
-  'taobao.com': () => SetTianMao(),
-  'tmall.com': () => SetTianMao(),
-};
-
-export const getHostDataParams = (local: any) => {
-  return GetResultSheet[RegUrlConfig(local)]();
+  'gsxt.gov.cn': () => currentViewData(),
 };
 
 type DomDataType = Record<string, Record<string, string>>;

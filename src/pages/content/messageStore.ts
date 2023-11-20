@@ -4,7 +4,7 @@ import {
   EDI,
   SCREENSHOT_SHORTCUT,
   SETTING_INDEX_EDI_SERVICES,
-  SETTING_INDEX_ICP_SERVICES,
+  SETTING_INDEX_ICP_SERVICES, SETTING_LIST_DATA,
   UPLOAD_IMG_FILES,
   WAKE_FILE_SELECTION,
 } from '@/common/agreement';
@@ -64,5 +64,14 @@ export const wakeFileSelection = () => {
 export const sendFilesForServices = (files: any, blob: any, callback: (e: any) => void) => {
   chrome.runtime.sendMessage({ type: UPLOAD_IMG_FILES, files, blob }).then((res) => {
     callback(res);
+  });
+};
+
+// 设置当前列表顺序
+export const settingListSort = () => {
+  chrome.runtime.sendMessage({ type: SETTING_LIST_DATA }).then((res) => {
+    console.log('info-res------------------>');
+    console.log(res);
+    console.log('info-res------------------>');
   });
 };
