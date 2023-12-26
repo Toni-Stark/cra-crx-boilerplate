@@ -358,6 +358,34 @@ export const chooseEDICateData = (data: any) => {
   }
 };
 
+export const settingImageFileCurrent = (data: any, params: any) => {
+  let input: any = document.querySelector('.avatar-uploader .el-upload__input');
+  UploadImageNoBaseAndAddElement(params.upload_file, input);
+};
+
+const UploadImageNoBaseAndAddElement = (src: string, imgView: any) => {
+  let file = base64ToFileTypeImage(src, new Date().getTime() + '.jpg');
+  const dataTransfer = new DataTransfer();
+  dataTransfer.items.add(file);
+  imgView.files = dataTransfer.files;
+  let e = new Event('change');
+  imgView.dispatchEvent(e);
+  return;
+};
+
+export const base64ToFileTypeImage = (base64Data: any, fileName: any) => {
+  let data = base64Data.split(',');
+  const bstr = window.atob(data[1]);
+  let type = 'image/png';
+  let n = bstr.length;
+  const u8arr = new Uint8Array(n);
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n);
+  }
+  return new File([u8arr], `${fileName}`, {
+    type: type,
+  });
+};
 export const chooseImgServices = () => {
   let upDom = document.querySelector('.el-upload--text');
   let e = new Event('click');

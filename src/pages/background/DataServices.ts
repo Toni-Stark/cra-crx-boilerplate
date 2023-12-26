@@ -126,12 +126,17 @@ export const listenerDataInfoMessage = (mobiles: string[]) => {
       });
     }
     if (response?.type === UPLOAD_IMG_FILES) {
-      if (!sender?.tab?.id) return;
-      let str: string = response.files;
-      UploadFiles(response.files, response.blob).then(() => {
-        console.log('logs');
+      gettingStorage('config', (res) => {
+        if (!sender?.tab?.id) return;
+        if (!res?.config) return;
+        let str: string = response.files;
+        if (!str) return;
+        sendMessageQueryCurrent(res.config.serverId, {
+          msg: UPLOAD_IMG_FILES,
+          ...response,
+          upload_file: str,
+        });
       });
-      sendResponse({ imageUrl: str });
     }
     if (response?.type === CHANGE_PLACE_SERVICES) {
       gettingStorage('config', (res) => {

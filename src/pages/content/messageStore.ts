@@ -62,12 +62,11 @@ export const wakeFileSelection = () => {
 };
 
 // 截取当前屏幕
-export const sendFilesForServices = (files: any, blob: any, callback: (e: any) => void) => {
-  chrome.runtime.sendMessage({ type: UPLOAD_IMG_FILES, files, blob }).then((res) => {
+export const sendFilesForServices = (files: any, callback: (e: any) => void) => {
+  chrome.runtime.sendMessage({ type: UPLOAD_IMG_FILES, files }).then((res) => {
     callback(res);
   });
 };
-
 // 修改当前数据的地址
 export const changeInfoServices = (type: string, params?: Partial<InfoType>) => {
   chrome.runtime.sendMessage({ type, params }).then((res) => {

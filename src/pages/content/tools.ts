@@ -167,3 +167,7 @@ export const isJSONString = (str: string) => {
     return false;
   }
 };
+
+export const Random = (val: number, bool = false) => {
+  return Math.floor(Math.random() * val) + (bool ? 1 : 0);
+};

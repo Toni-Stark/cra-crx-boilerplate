@@ -187,14 +187,13 @@ const downLoadImg = (s: IndexObj, e: IndexObj) => {
       e.x - s.x,
       e.y - s.y
     );
-    downLoadUrl(canvas2.toDataURL(), new Date().getTime() + '.png');
+    downLoadUrl(canvas2.toDataURL('image/png'), new Date().getTime() + '.png');
     // downLoadUrl(cth, new Date().getTime() + '.png');
   };
 };
 
 const downLoadUrl = (url: any, name: string) => {
-  let blob: any = BaseToBlob(url);
-  sendFilesForServices(url, blob, (e) => {
+  sendFilesForServices(url, (e) => {
     AddUploadImage(e);
     clearEveryLis();
   });
