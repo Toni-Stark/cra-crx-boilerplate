@@ -1,4 +1,5 @@
 import { data_maps } from '@/assets/js/map';
+import { Random } from '@/pages/content/tools';
 
 export const PathUrl = [
   'www.zhipin.com',
@@ -57,27 +58,40 @@ export const getTranslateAddress = (str: string) => {
     let num = Math.floor(Math.random() * (arr.length - 0.1));
     return obj.c[arr[num]];
   };
-
-  const getUnit = () => {
-    let hot = Math.floor(1 + Math.random() * 200) + '号';
-    const units = ["号","幢","号楼", '栋'];
-    const enUnits = "ABCDEF";
+  const getLast = () => {
+    let arr1 = ['栋', '幢'];
+    let arr2 = ['区'];
+    let arr3 = ['A', 'B', 'C', 'D'];
+    let arr4 = ['层', '楼'];
+    let arr5 = ['号'];
+    let arr6 = ['东', '南', '西', '北'];
+    let bool = Math.floor(Math.random() * 2);
     let str = '';
-    if(Math.floor(Math.random() * 2)){
-      str += Math.floor(1+Math.random() * 29);
-      str += units[Math.floor(Math.random() * units.length)];
+    if (bool) {
+      let b = Math.floor(Math.random() * 2);
+      str =
+        arr6[Random(arr6.length)] +
+        '面' +
+        Random(30, true) +
+        arr1[b] +
+        Random(28, true) +
+        '-' +
+        Random(12, true);
     } else {
-      let num = Math.floor(Math.random() * enUnits.length)
-      str += enUnits.substring(num, num+1);
-      str += '栋';
+      str =
+        arr3[Random(arr3.length)] +
+        Random(10, true) +
+        arr2[Random(arr2.length)] +
+        Random(20, true) +
+        arr5[Random(arr5.length)] +
+        Random(18, true) +
+        arr4[Random(arr4.length)];
     }
-
-    str += `${Math.floor(1+Math.random() * 30)}-${Math.floor(1+Math.random() * 8)}`;
-    return hot + str;
+    return str;
   };
   const getCoin = (regStr: any) => {
     let r = regStr.slice(-1, regStr.length);
-    let po = getUnit();
+    let po = getLast();
     if (
       [
         '街',
@@ -155,7 +169,7 @@ export function trimSpecial(str: string) {
   if (str !== '') {
     // const pattern =
     //     /[\.`~!@#$^\-&*()=|{}':;',\\\[\]<>\/?~！@#￥……&*（）——|{}【】'；：""'。，、？\s]/g;
-    const pattern = /[`~#$^lt&ns*()=|{};,\\[\]bp<>/！…【】；？\s]/g;
+    const pattern = /([`~#$^lt&ns*()=|{};,\\[\]bp<>/！…【】；？])|((展开更多))/g;
     str = str.replace(pattern, '');
   }
   return str;
