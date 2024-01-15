@@ -151,8 +151,8 @@ export const getTranslateAddress = (str: string) => {
   if (['天津'].includes(str)) {
     data = getMapsIndex([1201]);
   }
-  if (['岳阳'].includes(str)) {
-    data = getMapsIndex([4306]);
+  if (['湖南', '岳阳', '长沙', '衡阳', '邵阳'].includes(str)) {
+    data = getMapsIndex([4306, 4301, 4304, 4305]);
   }
   if (['内蒙古', '包头', '呼和浩特'].includes(str)) {
     data = getMapsIndex([1501, 1502]);

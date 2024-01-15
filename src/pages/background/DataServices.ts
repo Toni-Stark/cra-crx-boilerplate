@@ -24,7 +24,7 @@ import {
   settingStorage,
 } from '@/pages/background/SettingStore';
 import { createPeopleNameList, getTranslateAddress } from '@/common/passage-certificate';
-import { GetAPI, UploadFiles } from '@/pages/background/FetchStore';
+import { GetAPI } from '@/pages/background/FetchStore';
 import { InfoType } from '@/pages/types';
 import { isJSONString } from '@/pages/content/tools';
 
@@ -168,6 +168,7 @@ export const listenerDataInfoMessage = (mobiles: string[]) => {
     if (response?.type === CHANGE_ONE_PASS_SERVICES) {
       gettingStorage('config', (res) => {
         if (!res) return true;
+        console.log(res.config, 'config');
         if (res.config.type === ICP) {
           let list = isJSONString(response?.params.json);
           if (list) {
@@ -250,7 +251,7 @@ const openOnceDataDetail = (message: any, props: any, option: any, mobiles: any,
   if (message.area || (!message.area && !message.contacts)) {
     params.address = getTranslateAddress(address || defaultAddress);
   }
-  console.log(typeof message.json, message.json);
+  console.log(typeof message.json, message.json, params);
   if (message.json) {
     params.phone = message.json[0].phone;
     params.personnel = message.json[0].personnel;
