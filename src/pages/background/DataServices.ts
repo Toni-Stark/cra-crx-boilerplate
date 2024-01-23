@@ -15,6 +15,7 @@ import {
   SETTING_INDEX_EDI_SERVICES,
   SETTING_INDEX_ICP_SERVICES,
   UPLOAD_IMG_FILES,
+  UPLOAD_IMG_FILES_EDI,
   WAKE_FILE_SELECTION,
 } from '@/common/agreement';
 import {
@@ -48,10 +49,18 @@ export const listenerDataInfoMessage = (mobiles: string[]) => {
           });
           mobiles.splice(0, 1);
         }
+        console.log(response, res.config);
         if (res.config.type === EDI) {
           if (response.cate === EDI_STORE) {
             sendMessageQueryCurrent(res.config.serverId, {
               msg: EDI_STORE,
+              key: response.key,
+            });
+            return true;
+          }
+          if (response.cate === EDI_CATE) {
+            sendMessageQueryCurrent(res.config.serverId, {
+              msg: EDI_CATE,
               key: response.key,
             });
             return true;
@@ -130,9 +139,14 @@ export const listenerDataInfoMessage = (mobiles: string[]) => {
         if (!sender?.tab?.id) return;
         if (!res?.config) return;
         let str: string = response.files;
+        console.log(res, 'res');
         if (!str) return;
+        let msg_sign = UPLOAD_IMG_FILES;
+        if (res.config.type === 'edi') {
+          msg_sign = UPLOAD_IMG_FILES_EDI;
+        }
         sendMessageQueryCurrent(res.config.serverId, {
-          msg: UPLOAD_IMG_FILES,
+          msg: msg_sign,
           ...response,
           upload_file: str,
         });

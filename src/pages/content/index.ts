@@ -17,10 +17,15 @@ import {
   PUT_DOWN_ICP_DATA,
   SCREENSHOT_SHORTCUT,
   UPLOAD_IMG_FILES,
+  UPLOAD_IMG_FILES_EDI,
   WAKE_FILE_SELECTION,
 } from '@/common/agreement';
 import { MessageEventType } from '@/pages/types';
-import { currentHandEditDetail, settingImageFileCurrent } from '@/pages/content/output';
+import {
+  currentHandEditDetail,
+  settingImageFileCurrentEDI,
+  settingImageFileCurrentICP,
+} from '@/pages/content/output';
 chrome.runtime.onMessage.addListener(
   (
     request: MessageEventType,
@@ -53,7 +58,11 @@ chrome.runtime.onMessage.addListener(
       return;
     }
     if (request?.msg === UPLOAD_IMG_FILES) {
-      settingImageFileCurrent(sender, request);
+      settingImageFileCurrentICP(sender, request);
+      return;
+    }
+    if (request?.msg === UPLOAD_IMG_FILES_EDI) {
+      settingImageFileCurrentEDI(sender, request);
       return;
     }
     if (request?.msg === EDI_STORE) {

@@ -358,8 +358,12 @@ export const chooseEDICateData = (data: any) => {
   }
 };
 
-export const settingImageFileCurrent = (data: any, params: any) => {
+export const settingImageFileCurrentICP = (data: any, params: any) => {
   let input: any = document.querySelector('.avatar-uploader .el-upload__input');
+  UploadImageNoBaseAndAddElement(params.upload_file, input);
+};
+export const settingImageFileCurrentEDI = (data: any, params: any) => {
+  let input: any = document.querySelector('#fileUpload');
   UploadImageNoBaseAndAddElement(params.upload_file, input);
 };
 

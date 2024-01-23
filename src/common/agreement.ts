@@ -39,6 +39,8 @@ export const SCREENSHOT_SHORTCUT = 'screenshot_shortcut';
 export const WAKE_FILE_SELECTION = 'wake_file_selection';
 // 上传选中图片
 export const UPLOAD_IMG_FILES = 'upload_img_files';
+// 上传选中图片
+export const UPLOAD_IMG_FILES_EDI = 'upload_img_files_edi';
 
 // 修改当前数据的地址
 export const CHANGE_PLACE_SERVICES = 'change_place_services';

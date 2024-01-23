@@ -106,12 +106,12 @@ export const TaoBao = {
 };
 
 export const TAO_BAO = {
-  title: '.tb-main-title',
+  title: '.ItemHeader--mainTitle--3CIjqW5',
+  price: '.Price--priceText--2nLbVda',
 };
 export const TIAN_MAO = {
   title: '.ItemHeader--mainTitle--3CIjqW5',
   price: '.Price--priceText--2nLbVda',
-  // context: '.descV8-container',
 };
 
 export const DomTipsView = (str: string | null) => {
@@ -225,6 +225,15 @@ export const SetZuFangData = (): DomDataType => {
   };
 };
 export const SetTianMao = (): DomDataType => {
+  let valList: any = document.getElementsByClassName('textTips');
+  let areaList: any = document.getElementsByClassName('areaTips');
+  return {
+    title: valList[0]?.value,
+    price: valList[1]?.value,
+    context: areaList[0]?.value,
+  };
+};
+export const SetTaobao = (): DomDataType => {
   let valList: any = document.getElementsByClassName('textTips');
   let areaList: any = document.getElementsByClassName('areaTips');
   return {
@@ -470,7 +479,7 @@ export const GetResultSheet: any = {
   '58.com/danche/': () => SetEsSjData(),
   'ziroom.com/x/': () => SetZuFangData(),
   'www.jd.com': () => undefined,
-  'taobao.com': () => SetTianMao(),
+  'taobao.com': () => SetTaobao(),
   'tmall.com': () => SetTianMao(),
 };
 
