@@ -157,6 +157,12 @@ export const getTranslateAddress = (str: string) => {
   if (['内蒙古', '包头', '呼和浩特'].includes(str)) {
     data = getMapsIndex([1501, 1502]);
   }
+  if (['辽宁', '沈阳', '大连'].includes(str)) {
+    data = getMapsIndex([2101, 2102]);
+  }
+  if (['广西', '南宁'].includes(str)) {
+    data = getMapsIndex([4501, 4501]);
+  }
   let distinguish = getData(data);
 
   let county = getData(distinguish);

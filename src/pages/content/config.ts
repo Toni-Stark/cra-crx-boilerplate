@@ -74,6 +74,21 @@ export const HOT_ES58 = {
   context: '.txt>div',
   price: '.attr-info>dt>span',
 };
+export const JIA_DIAN_ES58 = {
+  title: '.detail-title>.detail-title__name',
+  context: '.description_con',
+  price: '.attr-info>dt>span',
+};
+export const JIA_DIAN_BAI_XIN = {
+  title: '.viewad-title>h1',
+  context: '.viewad-text',
+  price: '.viewad-actions .price',
+};
+export const JIA_JU_ES58 = {
+  title: '.detail-title__name',
+  context: '.description_con',
+  price: '.viewad-actions .price',
+};
 
 export const CHE168 = {
   title: '.car-brand-name',
@@ -450,6 +465,11 @@ export const DomDataSheet: any = {
   'www.jd.com': () => undefined,
   'taobao.com': () => GetEDIData(TAO_BAO),
   'tmall.com': () => GetEDIData(TIAN_MAO),
+  '58.com/jiadian/': () => GetEsSjData(JIA_DIAN_ES58),
+  '58.com/dianshiji/': () => GetEsSjData(JIA_DIAN_ES58),
+  'baixing.com/dianqi/': () => GetEsSjData(JIA_DIAN_BAI_XIN),
+  '58.com/chuang/': () => GetEsSjData(JIA_JU_ES58),
+  '58.com/ershoujiaju/': () => GetEsSjData(JIA_JU_ES58),
 };
 
 export const GetResultSheet: any = {
@@ -481,6 +501,10 @@ export const GetResultSheet: any = {
   'www.jd.com': () => undefined,
   'taobao.com': () => SetTaobao(),
   'tmall.com': () => SetTianMao(),
+  '58.com/jiadian/': () => SetEsSjData(),
+  '58.com/dianshiji/': () => SetEsSjData(),
+  '58.com/chuang/': () => SetEsSjData(),
+  '58.com/ershoujiaju/': () => SetEsSjData(),
 };
 
 export const getHostDataParams = (local: any) => {

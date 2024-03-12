@@ -135,7 +135,6 @@ export const getPriceRandom = (title: any, context: any, val?: any) => {
     return Math.ceil(Math.random() * 20 + 5) * 100;
   }
   if (tReg) {
-    return tReg[0].match(numReg)[0];
   }
   if (cReg) {
     return cReg[0].match(numReg)[0];
