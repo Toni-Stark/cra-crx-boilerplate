@@ -65,13 +65,6 @@ export const listenerDataInfoMessage = (mobiles: string[]) => {
             });
             return true;
           }
-          if (response.cate === EDI_CATE) {
-            sendMessageQueryCurrent(res.config.serverId, {
-              msg: EDI_CATE,
-              key: response.key,
-            });
-            return true;
-          }
           sendMessageQueryCurrent(res.config.serverId, {
             msg: PUT_DOWN_EDI_DATA,
             ...response,

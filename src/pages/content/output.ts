@@ -33,9 +33,10 @@ export const ZU_FANG: any = {
 };
 export const ZHAO_PING: any = {
   company_name:
-    '.el-col>div>.el-form-item:nth-child(2)>.el-form-item__content>.el-input>.el-input__inner',
+    '.el-col>div>.el-form-item:nth-child(1)>.el-form-item__content>.el-input>.el-input__inner',
   price:
-    '.el-col>div>.el-form-item:nth-child(3)>.el-form-item__content>.el-select>.el-input>.el-input__inner',
+    '.el-col>div>.el-form-item:nth-child(2)>.el-form-item__content>.el-select>.el-input>.el-input__inner',
+  desc: '.el-col>div>.el-form-item:nth-child(3)>.el-form-item__content>.el-textarea>.el-textarea__inner',
 };
 export const MAI_FANG: any = {
   unit: '.el-col>div>.el-form-item:nth-child(1)>.el-form-item__content>.el-select>.el-input>.el-input__inner',
@@ -158,6 +159,11 @@ export const putDownICPData = (data: any) => {
       if (i === 'company_name') {
         let formEle: any = queryEle(ZHAO_PING[i]);
         formEle.value = data[i];
+        DispatchEvent(formEle, 'input');
+      }
+      if (i === 'desc') {
+        let formEle: any = queryEle(ZHAO_PING[i]);
+        formEle.value = data[i] || '';
         DispatchEvent(formEle, 'input');
       }
       if (i === 'price') {
@@ -292,42 +298,14 @@ export const putDownEDIData = (data: any) => {
   if (data.cate === 'SHANG_PING') {
     for (let i in SHANG_PING) {
       if (i === 'e_price') {
-        let ranNum: any = data?.e_price
-          ? Math.ceil(Math.random() * 150) + data?.e_price
-          : Math.ceil(Math.random() * 150);
+        let ranNum: any = data?.e_price ? data?.e_price : 200;
         let formEle: any = queryEle(SHANG_PING[i]);
         formEle.value = ranNum;
         DispatchEvent(formEle, 'input');
         let formEleEval: any = queryEle('#goodsBaseBody>tr>td:nth-child(4)>.input-sm');
-        formEleEval.value = ranNum + 50;
+        formEleEval.value = ranNum;
         DispatchEvent(formEleEval, 'input');
       }
-      // if (i === 'user') {
-      //   let selList: any = queryEle(SHANG_PING[i]);
-      //   let selItems: any = queryEleAll(SHANG_PING[i] + '>option');
-      //   selList.value = selItems[Math.floor(Math.random() * 5) + 1].value;
-      // }
-      // if (i === 'cate') {
-      //   let btn: any = queryEle(SHANG_PING[i]);
-      //   btn.click();
-      //   setTimeout(() => {
-      //     let num = Math.floor(Math.random() * 2) + 1;
-      //     let conDom: any = queryEle('.aui_state_full>iframe');
-      //     let domList = conDom?.contentDocument.querySelectorAll('#categoryBox>.select>li>label');
-      //     domList[num].click();
-      //     setTimeout(() => {
-      //       let confirm: any = queryEle('.aui_state_highlight');
-      //       confirm?.click();
-      //     }, 200);
-      //   }, 2000);
-      // }
-      // if (i === 'context') {
-      //   let richDom: any = queryEle('.ck-editor__editable_inline');
-      //   let Img = document.createElement('img');
-      //   Img.src =
-      //     'https://img.alicdn.com/imgextra/i1/4011321989/O1CN01dZTmDW1QZ0YIUq0wC_!!4011321989.jpg';
-      //   richDom.appendChild(Img);
-      // }
     }
   }
 };
