@@ -163,6 +163,9 @@ export const getTranslateAddress = (str: string) => {
   if (['广西', '南宁'].includes(str)) {
     data = getMapsIndex([4501, 4501]);
   }
+  if (['珠海', '广州', '深圳'].includes(str)) {
+    data = getMapsIndex([4404, 4401, 4403]);
+  }
   let distinguish = getData(data);
 
   let county = getData(distinguish);
@@ -179,4 +182,24 @@ export function trimSpecial(str: string) {
     str = str.replace(pattern, '');
   }
   return str;
+}
+
+export function getQueryParams(url: string) {
+  // 使用正则表达式获取URL中的查询字符串
+  let queryString = url.split('?')[1];
+  if (!queryString) {
+    return {};
+  }
+
+  // 将查询字符串分割为键值对
+  let params: any = {};
+  queryString.split('&').forEach((pair) => {
+    let [key, value] = pair.split('=');
+    params[decodeURIComponent(key)] = decodeURIComponent(value || '');
+  });
+
+  return params;
+}
+export function checkStringInto(mStr: string, str: string) {
+  return mStr.indexOf(str) >= 0;
 }

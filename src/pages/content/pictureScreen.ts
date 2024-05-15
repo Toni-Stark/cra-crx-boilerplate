@@ -1,6 +1,6 @@
 import { IndexObj } from '@/pages/types';
 import { sendFilesForServices, sendMessageScreenIndex } from '@/pages/content/messageStore';
-import { BaseToBlob, queryEle } from '@/pages/content/tools';
+import { queryEle } from '@/pages/content/tools';
 let drawFiles: any = null;
 
 export const createCanvasScreen = (files: any) => {
@@ -13,7 +13,7 @@ export const createCanvasScreen = (files: any) => {
   settingMouse();
 };
 
-function queryDom(str: string): any {
+export function queryDom(str: string): any {
   return document.querySelector(str);
 }
 function createDom(dom: string, cla: string, text?: string): any {
@@ -199,36 +199,36 @@ const downLoadUrl = (url: any, name: string) => {
   });
   return;
   // 下载到本地
-  let saveLink = document.createElement('a');
-  saveLink.style.display = 'none';
-  saveLink.href = url;
-  saveLink.download = name;
-  let event = document.createEvent('MouseEvents');
-  event.initMouseEvent(
-    'click',
-    true,
-    false,
-    window,
-    0,
-    0,
-    0,
-    0,
-    0,
-    false,
-    false,
-    false,
-    false,
-    0,
-    null
-  );
-  saveLink.dispatchEvent(event);
-  setTimeout(
-    () =>
-      function () {
-        document.body.removeChild(saveLink); //保存完后删除临时a节点
-      },
-    500
-  );
+  // let saveLink = document.createElement('a');
+  // saveLink.style.display = 'none';
+  // saveLink.href = url;
+  // saveLink.download = name;
+  // let event = document.createEvent('MouseEvents');
+  // event.initMouseEvent(
+  //   'click',
+  //   true,
+  //   false,
+  //   window,
+  //   0,
+  //   0,
+  //   0,
+  //   0,
+  //   0,
+  //   false,
+  //   false,
+  //   false,
+  //   false,
+  //   0,
+  //   null
+  // );
+  // saveLink.dispatchEvent(event);
+  // setTimeout(
+  //   () =>
+  //     function () {
+  //       document.body.removeChild(saveLink); //保存完后删除临时a节点
+  //     },
+  //   500
+  // );
 
   // 唤醒中台图片选择
   // wakeFileSelection();

@@ -12,6 +12,7 @@ import { MessageEventType } from '@/pages/types';
 import {
   chooseEDICateData,
   chooseImgServices,
+  DispatchEvent,
   putDownEDIData,
   putDownICPData,
 } from '@/pages/content/output';
@@ -26,7 +27,8 @@ import {
   EDI_STORE,
   ICP,
 } from '@/common/agreement';
-import { createCanvasScreen, createStartScreenBtn } from '@/pages/content/pictureScreen';
+import { createCanvasScreen, createStartScreenBtn, queryDom } from '@/pages/content/pictureScreen';
+import { checkStringInto, getQueryParams } from '@/common/passage-certificate';
 
 // 设置css;
 export const createContentStyle = (css: string) => {
@@ -75,20 +77,75 @@ export const createContentView = () => {
   let dom: any = queryEle('body');
   let floatView = queryEle('.floatModal');
   let modalView = queryEle('.floatView');
+  let screenView = queryEle('.screen_btn_float');
   if (floatView) floatView.remove();
   if (modalView) modalView.remove();
+  if (screenView) screenView.remove();
+
+  let params = getQueryParams(document.location.href);
   floatView = createDom({ tag: 'div', cla: 'floatView' });
   dom.appendChild(floatView);
-  CreateDataModal();
-  CreateConfigModal();
-  settingServerIndex(ICP);
-  settingServerIndex(EDI);
-  AskServicesEdiTYPE();
-
+  if (params?.action === 'goods_edit') {
+    settingServerIndex(EDI);
+  } else if (params?.cid) {
+    CreateConfigModal();
+    AskServicesEdiTYPE();
+    settingServerIndex(ICP);
+  } else {
+    CreateDataModal();
+    StartScreenFlash();
+    if (checkStringInto(document.location.href, 'login')) {
+      settingLogin('icp');
+    }
+    if (checkStringInto(document.location.href, 'adminapg7r86drsx')) {
+      settingLogin('edi');
+    }
+  }
+  if (checkStringInto(document.location.href, 'Mzbv6GAE')) {
+    settingLogin('local');
+  }
+  if (checkStringInto(document.location.href, '915a4390')) {
+    settingLogin('prod');
+  }
   if (DomDataSheet.hasOwnProperty(RegUrlConfig(document.location))) {
     DomDataSheet[RegUrlConfig(document.location)]();
   }
-  StartScreenFlash();
+};
+
+const settingLogin = (key: any) => {
+  let loginView = queryEle('.loginView');
+  loginView?.remove();
+  loginView = createDom({ tag: 'div', cla: 'loginView', txt: '填写账号' });
+  loginView.addEventListener('click', () => {
+    console.log('填入', key);
+    if (key === 'edi') {
+      queryDom('input[name="admin_name"]').value = 'admin';
+      queryDom('input[name="password"]').value = 'yKp6mTdP';
+    }
+    if (key === 'icp') {
+      let name = queryDom('input[name="username"]');
+      name.value = 'admin';
+      DispatchEvent(name, 'input');
+      let password = queryDom('input[name="password"]');
+      password.value = 'yKp6mTdP';
+      DispatchEvent(password, 'input');
+    }
+    if (key === 'local') {
+      queryDom('input[name="username"]').value = 'g8dCzE31';
+      queryDom('input[name="password"]').value = 'rjfXaXzE';
+      setTimeout(() => {
+        queryDom('#login-button').click();
+      }, 500);
+    }
+    if (key === 'prod') {
+      queryDom('#username').value = 'ulravx79';
+      queryDom('#password').value = 'A4uMbuz94l3bnW27';
+      setTimeout(() => {
+        queryDom('.login_btn').click();
+      }, 500);
+    }
+  });
+  queryDom('body').appendChild(loginView);
 };
 
 // const CreateEDIModal = () => {
@@ -103,6 +160,7 @@ export const createContentView = () => {
 // };
 const CreateDataModal = () => {
   let floatView = queryEle('.floatView');
+  console.log(floatView, '3423424');
   let ReviewModal: any = queryEle('.floatView>.ReviewModal');
   ReviewModal?.remove();
   ReviewModal = createDom({ tag: 'div', cla: 'ReviewModal', txt: '收集' });
