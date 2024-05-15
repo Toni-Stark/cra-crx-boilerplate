@@ -90,6 +90,11 @@ export const JIA_JU_ES58 = {
   context: '.description_con',
   price: '.viewad-actions .price',
 };
+export const ZBJ_WEB = {
+  title: '.service-title .text-ellipsis',
+  context: '.intro-content',
+  price: '.price span',
+};
 
 export const CHE168 = {
   title: '.car-brand-name',
@@ -465,6 +470,7 @@ export const DomDataSheet: any = {
   'baixing.com/dianqi/': () => GetEsSjData(JIA_DIAN_BAI_XIN),
   '58.com/chuang/': () => GetEsSjData(JIA_JU_ES58),
   '58.com/ershoujiaju/': () => GetEsSjData(JIA_JU_ES58),
+  'zbj.com/fw/': () => GetEsSjData(ZBJ_WEB),
 };
 
 export const GetResultSheet: any = {
@@ -499,6 +505,7 @@ export const GetResultSheet: any = {
   '58.com/dianshiji/': () => SetEsSjData(),
   '58.com/chuang/': () => SetEsSjData(),
   '58.com/ershoujiaju/': () => SetEsSjData(),
+  'zbj.com/fw/': () => SetEsSjData(),
 };
 
 export const getHostDataParams = (local: any) => {

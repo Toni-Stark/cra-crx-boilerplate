@@ -59,6 +59,7 @@ export const RegUrlConfig = (local: any) => {
     'ziroom',
     'taobao',
     'tmall',
+    'zbj',
   ];
   let res: number = 0;
   list.find((item) => {

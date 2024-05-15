@@ -163,7 +163,7 @@ export const getTranslateAddress = (str: string) => {
   if (['广西', '南宁'].includes(str)) {
     data = getMapsIndex([4501, 4501]);
   }
-  if (['珠海', '广州', '深圳'].includes(str)) {
+  if (['广东', '珠海', '广州', '深圳'].includes(str)) {
     data = getMapsIndex([4404, 4401, 4403]);
   }
   let distinguish = getData(data);
